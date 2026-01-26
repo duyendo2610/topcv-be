@@ -1,0 +1,15 @@
+C:\Users\dovan\topCv\topCv.Application\bin\Debug\net8.0\topCv.Application.deps.json
+C:\Users\dovan\topCv\topCv.Application\bin\Debug\net8.0\topCv.Application.dll
+C:\Users\dovan\topCv\topCv.Application\bin\Debug\net8.0\topCv.Application.pdb
+C:\Users\dovan\topCv\topCv.Application\bin\Debug\net8.0\topCv.Domain.dll
+C:\Users\dovan\topCv\topCv.Application\bin\Debug\net8.0\topCv.Domain.pdb
+C:\Users\dovan\topCv\topCv.Application\obj\Debug\net8.0\topCv.Application.csproj.AssemblyReference.cache
+C:\Users\dovan\topCv\topCv.Application\obj\Debug\net8.0\topCv.Application.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\dovan\topCv\topCv.Application\obj\Debug\net8.0\topCv.Application.AssemblyInfoInputs.cache
+C:\Users\dovan\topCv\topCv.Application\obj\Debug\net8.0\topCv.Application.AssemblyInfo.cs
+C:\Users\dovan\topCv\topCv.Application\obj\Debug\net8.0\topCv.Application.csproj.CoreCompileInputs.cache
+C:\Users\dovan\topCv\topCv.Application\obj\Debug\net8.0\topCv.Ap.7D47B16E.Up2Date
+C:\Users\dovan\topCv\topCv.Application\obj\Debug\net8.0\topCv.Application.dll
+C:\Users\dovan\topCv\topCv.Application\obj\Debug\net8.0\refint\topCv.Application.dll
+C:\Users\dovan\topCv\topCv.Application\obj\Debug\net8.0\topCv.Application.pdb
+C:\Users\dovan\topCv\topCv.Application\obj\Debug\net8.0\ref\topCv.Application.dll

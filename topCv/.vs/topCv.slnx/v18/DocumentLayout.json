@@ -1,0 +1,411 @@
+{
+  "Version": 1,
+  "WorkspaceRootPath": "C:\\Users\\dovan\\topCv\\",
+  "Documents": [
+    {
+      "AbsoluteMoniker": "D:0:0:{BE6183E0-F3EE-D740-E867-A2AF2865914A}|topCv.Application\\topCv.Application.csproj|c:\\users\\dovan\\topcv\\topcv.application\\services\\authservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{BE6183E0-F3EE-D740-E867-A2AF2865914A}|topCv.Application\\topCv.Application.csproj|solutionrelative:topcv.application\\services\\authservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{BE6183E0-F3EE-D740-E867-A2AF2865914A}|topCv.Application\\topCv.Application.csproj|c:\\users\\dovan\\topcv\\topcv.application\\common\\ipasswordhasher.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{BE6183E0-F3EE-D740-E867-A2AF2865914A}|topCv.Application\\topCv.Application.csproj|solutionrelative:topcv.application\\common\\ipasswordhasher.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{E1C4CEDA-138C-2C9E-648A-1CB7EA2FEEA0}|topCv.Infrastructure\\topCv.Infrastructure.csproj|c:\\users\\dovan\\topcv\\topcv.infrastructure\\security\\passwordhasherservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{E1C4CEDA-138C-2C9E-648A-1CB7EA2FEEA0}|topCv.Infrastructure\\topCv.Infrastructure.csproj|solutionrelative:topcv.infrastructure\\security\\passwordhasherservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{6DE6C9A5-EBE7-D9D4-0E39-BD20CF2455DA}|topCv.Domain\\topCv.Domain.csproj|c:\\users\\dovan\\topcv\\topcv.domain\\entities\\auth\\refreshtoken.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{6DE6C9A5-EBE7-D9D4-0E39-BD20CF2455DA}|topCv.Domain\\topCv.Domain.csproj|solutionrelative:topcv.domain\\entities\\auth\\refreshtoken.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{6DE6C9A5-EBE7-D9D4-0E39-BD20CF2455DA}|topCv.Domain\\topCv.Domain.csproj|c:\\users\\dovan\\topcv\\topcv.domain\\entities\\auth\\user.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{6DE6C9A5-EBE7-D9D4-0E39-BD20CF2455DA}|topCv.Domain\\topCv.Domain.csproj|solutionrelative:topcv.domain\\entities\\auth\\user.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{E1C4CEDA-138C-2C9E-648A-1CB7EA2FEEA0}|topCv.Infrastructure\\topCv.Infrastructure.csproj|c:\\users\\dovan\\topcv\\topcv.infrastructure\\security\\tokenservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{E1C4CEDA-138C-2C9E-648A-1CB7EA2FEEA0}|topCv.Infrastructure\\topCv.Infrastructure.csproj|solutionrelative:topcv.infrastructure\\security\\tokenservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{6A96D79B-471F-1985-9FBA-D8C218C58AE1}|topCv.Api\\topCv.Api.csproj|c:\\users\\dovan\\topcv\\topcv.api\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{6A96D79B-471F-1985-9FBA-D8C218C58AE1}|topCv.Api\\topCv.Api.csproj|solutionrelative:topcv.api\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{6A96D79B-471F-1985-9FBA-D8C218C58AE1}|topCv.Api\\topCv.Api.csproj|c:\\users\\dovan\\topcv\\topcv.api\\appsettings.json||{90A6B3A7-C1A3-4009-A288-E2FF89E96FA0}",
+      "RelativeMoniker": "D:0:0:{6A96D79B-471F-1985-9FBA-D8C218C58AE1}|topCv.Api\\topCv.Api.csproj|solutionrelative:topcv.api\\appsettings.json||{90A6B3A7-C1A3-4009-A288-E2FF89E96FA0}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{E1C4CEDA-138C-2C9E-648A-1CB7EA2FEEA0}|topCv.Infrastructure\\topCv.Infrastructure.csproj|c:\\users\\dovan\\topcv\\topcv.infrastructure\\security\\jwtsetting.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{E1C4CEDA-138C-2C9E-648A-1CB7EA2FEEA0}|topCv.Infrastructure\\topCv.Infrastructure.csproj|solutionrelative:topcv.infrastructure\\security\\jwtsetting.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{BE6183E0-F3EE-D740-E867-A2AF2865914A}|topCv.Application\\topCv.Application.csproj|c:\\users\\dovan\\topcv\\topcv.application\\interfaces\\auth\\itokenservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{BE6183E0-F3EE-D740-E867-A2AF2865914A}|topCv.Application\\topCv.Application.csproj|solutionrelative:topcv.application\\interfaces\\auth\\itokenservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{BE6183E0-F3EE-D740-E867-A2AF2865914A}|topCv.Application\\topCv.Application.csproj|c:\\users\\dovan\\topcv\\topcv.application\\interfaces\\auth\\iauthservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{BE6183E0-F3EE-D740-E867-A2AF2865914A}|topCv.Application\\topCv.Application.csproj|solutionrelative:topcv.application\\interfaces\\auth\\iauthservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{BE6183E0-F3EE-D740-E867-A2AF2865914A}|topCv.Application\\topCv.Application.csproj|c:\\users\\dovan\\topcv\\topcv.application\\dtos\\auth\\refreshtokenrequest.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{BE6183E0-F3EE-D740-E867-A2AF2865914A}|topCv.Application\\topCv.Application.csproj|solutionrelative:topcv.application\\dtos\\auth\\refreshtokenrequest.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{BE6183E0-F3EE-D740-E867-A2AF2865914A}|topCv.Application\\topCv.Application.csproj|c:\\users\\dovan\\topcv\\topcv.application\\dtos\\auth\\authresponse.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{BE6183E0-F3EE-D740-E867-A2AF2865914A}|topCv.Application\\topCv.Application.csproj|solutionrelative:topcv.application\\dtos\\auth\\authresponse.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{BE6183E0-F3EE-D740-E867-A2AF2865914A}|topCv.Application\\topCv.Application.csproj|c:\\users\\dovan\\topcv\\topcv.application\\common\\iappdbcontext.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{BE6183E0-F3EE-D740-E867-A2AF2865914A}|topCv.Application\\topCv.Application.csproj|solutionrelative:topcv.application\\common\\iappdbcontext.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{E1C4CEDA-138C-2C9E-648A-1CB7EA2FEEA0}|topCv.Infrastructure\\topCv.Infrastructure.csproj|c:\\users\\dovan\\topcv\\topcv.infrastructure\\persistence\\appdbcontext.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{E1C4CEDA-138C-2C9E-648A-1CB7EA2FEEA0}|topCv.Infrastructure\\topCv.Infrastructure.csproj|solutionrelative:topcv.infrastructure\\persistence\\appdbcontext.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{BE6183E0-F3EE-D740-E867-A2AF2865914A}|topCv.Application\\topCv.Application.csproj|c:\\users\\dovan\\topcv\\topcv.application\\topcv.application.csproj||{FA3CD31E-987B-443A-9B81-186104E8DAC1}|",
+      "RelativeMoniker": "D:0:0:{BE6183E0-F3EE-D740-E867-A2AF2865914A}|topCv.Application\\topCv.Application.csproj|solutionrelative:topcv.application\\topcv.application.csproj||{FA3CD31E-987B-443A-9B81-186104E8DAC1}|"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{BE6183E0-F3EE-D740-E867-A2AF2865914A}|topCv.Application\\topCv.Application.csproj|c:\\users\\dovan\\topcv\\topcv.application\\dtos\\auth\\registerrequest.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{BE6183E0-F3EE-D740-E867-A2AF2865914A}|topCv.Application\\topCv.Application.csproj|solutionrelative:topcv.application\\dtos\\auth\\registerrequest.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{BE6183E0-F3EE-D740-E867-A2AF2865914A}|topCv.Application\\topCv.Application.csproj|c:\\users\\dovan\\topcv\\topcv.application\\dtos\\auth\\loginrequest.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{BE6183E0-F3EE-D740-E867-A2AF2865914A}|topCv.Application\\topCv.Application.csproj|solutionrelative:topcv.application\\dtos\\auth\\loginrequest.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{E1C4CEDA-138C-2C9E-648A-1CB7EA2FEEA0}|topCv.Infrastructure\\topCv.Infrastructure.csproj|c:\\users\\dovan\\topcv\\topcv.infrastructure\\configuration\\auth\\userconfiguration.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{E1C4CEDA-138C-2C9E-648A-1CB7EA2FEEA0}|topCv.Infrastructure\\topCv.Infrastructure.csproj|solutionrelative:topcv.infrastructure\\configuration\\auth\\userconfiguration.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{E1C4CEDA-138C-2C9E-648A-1CB7EA2FEEA0}|topCv.Infrastructure\\topCv.Infrastructure.csproj|c:\\users\\dovan\\topcv\\topcv.infrastructure\\configuration\\auth\\refreshtokenconfiguration.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{E1C4CEDA-138C-2C9E-648A-1CB7EA2FEEA0}|topCv.Infrastructure\\topCv.Infrastructure.csproj|solutionrelative:topcv.infrastructure\\configuration\\auth\\refreshtokenconfiguration.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{E1C4CEDA-138C-2C9E-648A-1CB7EA2FEEA0}|topCv.Infrastructure\\topCv.Infrastructure.csproj|c:\\users\\dovan\\topcv\\topcv.infrastructure\\migrations\\20260125175513_initdb.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{E1C4CEDA-138C-2C9E-648A-1CB7EA2FEEA0}|topCv.Infrastructure\\topCv.Infrastructure.csproj|solutionrelative:topcv.infrastructure\\migrations\\20260125175513_initdb.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{6A96D79B-471F-1985-9FBA-D8C218C58AE1}|topCv.Api\\topCv.Api.csproj|c:\\users\\dovan\\topcv\\topcv.api\\appsettings.development.json||{90A6B3A7-C1A3-4009-A288-E2FF89E96FA0}",
+      "RelativeMoniker": "D:0:0:{6A96D79B-471F-1985-9FBA-D8C218C58AE1}|topCv.Api\\topCv.Api.csproj|solutionrelative:topcv.api\\appsettings.development.json||{90A6B3A7-C1A3-4009-A288-E2FF89E96FA0}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{E1C4CEDA-138C-2C9E-648A-1CB7EA2FEEA0}|topCv.Infrastructure\\topCv.Infrastructure.csproj|c:\\users\\dovan\\topcv\\topcv.infrastructure\\topcv.infrastructure.csproj||{FA3CD31E-987B-443A-9B81-186104E8DAC1}|",
+      "RelativeMoniker": "D:0:0:{E1C4CEDA-138C-2C9E-648A-1CB7EA2FEEA0}|topCv.Infrastructure\\topCv.Infrastructure.csproj|solutionrelative:topcv.infrastructure\\topcv.infrastructure.csproj||{FA3CD31E-987B-443A-9B81-186104E8DAC1}|"
+    }
+  ],
+  "DocumentGroupContainers": [
+    {
+      "Orientation": 0,
+      "VerticalTabListWidth": 256,
+      "DocumentGroups": [
+        {
+          "DockedWidth": 200,
+          "SelectedChildIndex": 2,
+          "Children": [
+            {
+              "$type": "Document",
+              "DocumentIndex": 5,
+              "Title": "TokenService.cs",
+              "DocumentMoniker": "C:\\Users\\dovan\\topCv\\topCv.Infrastructure\\Security\\TokenService.cs",
+              "RelativeDocumentMoniker": "topCv.Infrastructure\\Security\\TokenService.cs",
+              "ToolTip": "C:\\Users\\dovan\\topCv\\topCv.Infrastructure\\Security\\TokenService.cs",
+              "RelativeToolTip": "topCv.Infrastructure\\Security\\TokenService.cs",
+              "ViewState": "AgIAABgAAAAAAAAAAAAAwC8AAAAoAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-01-26T16:08:53.069Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 2,
+              "Title": "PasswordHasherService.cs",
+              "DocumentMoniker": "C:\\Users\\dovan\\topCv\\topCv.Infrastructure\\Security\\PasswordHasherService.cs",
+              "RelativeDocumentMoniker": "topCv.Infrastructure\\Security\\PasswordHasherService.cs",
+              "ToolTip": "C:\\Users\\dovan\\topCv\\topCv.Infrastructure\\Security\\PasswordHasherService.cs",
+              "RelativeToolTip": "topCv.Infrastructure\\Security\\PasswordHasherService.cs",
+              "ViewState": "AgIAAAYAAAAAAAAAAAAAABkAAAAyAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-01-26T15:21:50.207Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 0,
+              "Title": "AuthService.cs",
+              "DocumentMoniker": "C:\\Users\\dovan\\topCv\\topCv.Application\\Services\\AuthService.cs",
+              "RelativeDocumentMoniker": "topCv.Application\\Services\\AuthService.cs",
+              "ToolTip": "C:\\Users\\dovan\\topCv\\topCv.Application\\Services\\AuthService.cs",
+              "RelativeToolTip": "topCv.Application\\Services\\AuthService.cs",
+              "ViewState": "AgIAAGoAAAAAAAAAAAAjwIEAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-01-26T14:22:09.813Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 8,
+              "Title": "JwtSetting.cs",
+              "DocumentMoniker": "C:\\Users\\dovan\\topCv\\topCv.Infrastructure\\Security\\JwtSetting.cs",
+              "RelativeDocumentMoniker": "topCv.Infrastructure\\Security\\JwtSetting.cs",
+              "ToolTip": "C:\\Users\\dovan\\topCv\\topCv.Infrastructure\\Security\\JwtSetting.cs",
+              "RelativeToolTip": "topCv.Infrastructure\\Security\\JwtSetting.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAABEAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-01-26T14:14:28.998Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 6,
+              "Title": "Program.cs",
+              "DocumentMoniker": "C:\\Users\\dovan\\topCv\\topCv.Api\\Program.cs",
+              "RelativeDocumentMoniker": "topCv.Api\\Program.cs",
+              "ToolTip": "C:\\Users\\dovan\\topCv\\topCv.Api\\Program.cs",
+              "RelativeToolTip": "topCv.Api\\Program.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAABkAAAARAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-01-25T17:47:30.436Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 7,
+              "Title": "appsettings.json",
+              "DocumentMoniker": "C:\\Users\\dovan\\topCv\\topCv.Api\\appsettings.json",
+              "RelativeDocumentMoniker": "topCv.Api\\appsettings.json",
+              "ToolTip": "C:\\Users\\dovan\\topCv\\topCv.Api\\appsettings.json",
+              "RelativeToolTip": "topCv.Api\\appsettings.json",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAcAAAAEAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001642|",
+              "WhenOpened": "2026-01-25T17:45:59.773Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 3,
+              "Title": "RefreshToken.cs",
+              "DocumentMoniker": "C:\\Users\\dovan\\topCv\\topCv.Domain\\Entities\\Auth\\RefreshToken.cs",
+              "RelativeDocumentMoniker": "topCv.Domain\\Entities\\Auth\\RefreshToken.cs",
+              "ToolTip": "C:\\Users\\dovan\\topCv\\topCv.Domain\\Entities\\Auth\\RefreshToken.cs",
+              "RelativeToolTip": "topCv.Domain\\Entities\\Auth\\RefreshToken.cs",
+              "ViewState": "AgIAAAMAAAAAAAAAAAAAAAwAAAAoAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-01-25T17:20:24.509Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 4,
+              "Title": "User.cs",
+              "DocumentMoniker": "C:\\Users\\dovan\\topCv\\topCv.Domain\\Entities\\Auth\\User.cs",
+              "RelativeDocumentMoniker": "topCv.Domain\\Entities\\Auth\\User.cs",
+              "ToolTip": "C:\\Users\\dovan\\topCv\\topCv.Domain\\Entities\\Auth\\User.cs",
+              "RelativeToolTip": "topCv.Domain\\Entities\\Auth\\User.cs",
+              "ViewState": "AgIAAAYAAAAAAAAAAAAAAA8AAAAzAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-01-25T17:17:41.511Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 1,
+              "Title": "IPasswordHasher.cs",
+              "DocumentMoniker": "C:\\Users\\dovan\\topCv\\topCv.Application\\Common\\IPasswordHasher.cs",
+              "RelativeDocumentMoniker": "topCv.Application\\Common\\IPasswordHasher.cs",
+              "ToolTip": "C:\\Users\\dovan\\topCv\\topCv.Application\\Common\\IPasswordHasher.cs",
+              "RelativeToolTip": "topCv.Application\\Common\\IPasswordHasher.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAqwA8AAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-01-26T15:16:49.665Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 9,
+              "Title": "ITokenService.cs",
+              "DocumentMoniker": "C:\\Users\\dovan\\topCv\\topCv.Application\\Interfaces\\Auth\\ITokenService.cs",
+              "RelativeDocumentMoniker": "topCv.Application\\Interfaces\\Auth\\ITokenService.cs",
+              "ToolTip": "C:\\Users\\dovan\\topCv\\topCv.Application\\Interfaces\\Auth\\ITokenService.cs",
+              "RelativeToolTip": "topCv.Application\\Interfaces\\Auth\\ITokenService.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAwAAAAkAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-01-26T16:08:11.537Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 10,
+              "Title": "IAuthService.cs",
+              "DocumentMoniker": "C:\\Users\\dovan\\topCv\\topCv.Application\\Interfaces\\Auth\\IAuthService.cs",
+              "RelativeDocumentMoniker": "topCv.Application\\Interfaces\\Auth\\IAuthService.cs",
+              "ToolTip": "C:\\Users\\dovan\\topCv\\topCv.Application\\Interfaces\\Auth\\IAuthService.cs",
+              "RelativeToolTip": "topCv.Application\\Interfaces\\Auth\\IAuthService.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAYAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-01-26T14:18:59.35Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 13,
+              "Title": "IAppDbContext.cs",
+              "DocumentMoniker": "C:\\Users\\dovan\\topCv\\topCv.Application\\Common\\IAppDbContext.cs",
+              "RelativeDocumentMoniker": "topCv.Application\\Common\\IAppDbContext.cs",
+              "ToolTip": "C:\\Users\\dovan\\topCv\\topCv.Application\\Common\\IAppDbContext.cs",
+              "RelativeToolTip": "topCv.Application\\Common\\IAppDbContext.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAA0AAAAyAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-01-26T14:55:35.043Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 11,
+              "Title": "RefreshTokenRequest.cs",
+              "DocumentMoniker": "C:\\Users\\dovan\\topCv\\topCv.Application\\DTOs\\Auth\\RefreshTokenRequest.cs",
+              "RelativeDocumentMoniker": "topCv.Application\\DTOs\\Auth\\RefreshTokenRequest.cs",
+              "ToolTip": "C:\\Users\\dovan\\topCv\\topCv.Application\\DTOs\\Auth\\RefreshTokenRequest.cs",
+              "RelativeToolTip": "topCv.Application\\DTOs\\Auth\\RefreshTokenRequest.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAA0AAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-01-26T13:41:53.383Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 15,
+              "Title": "topCv.Application",
+              "DocumentMoniker": "C:\\Users\\dovan\\topCv\\topCv.Application\\topCv.Application.csproj",
+              "RelativeDocumentMoniker": "topCv.Application\\topCv.Application.csproj",
+              "ToolTip": "C:\\Users\\dovan\\topCv\\topCv.Application\\topCv.Application.csproj",
+              "RelativeToolTip": "topCv.Application\\topCv.Application.csproj",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000758|",
+              "WhenOpened": "2026-01-26T14:57:08.31Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 14,
+              "Title": "AppDbContext.cs",
+              "DocumentMoniker": "C:\\Users\\dovan\\topCv\\topCv.Infrastructure\\Persistence\\AppDbContext.cs",
+              "RelativeDocumentMoniker": "topCv.Infrastructure\\Persistence\\AppDbContext.cs",
+              "ToolTip": "C:\\Users\\dovan\\topCv\\topCv.Infrastructure\\Persistence\\AppDbContext.cs",
+              "RelativeToolTip": "topCv.Infrastructure\\Persistence\\AppDbContext.cs",
+              "ViewState": "AgIAAAMAAAAAAAAAAAAAABAAAAA+AAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-01-25T17:17:52.803Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 12,
+              "Title": "AuthResponse.cs",
+              "DocumentMoniker": "C:\\Users\\dovan\\topCv\\topCv.Application\\DTOs\\Auth\\AuthResponse.cs",
+              "RelativeDocumentMoniker": "topCv.Application\\DTOs\\Auth\\AuthResponse.cs",
+              "ToolTip": "C:\\Users\\dovan\\topCv\\topCv.Application\\DTOs\\Auth\\AuthResponse.cs",
+              "RelativeToolTip": "topCv.Application\\DTOs\\Auth\\AuthResponse.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAA4AAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-01-26T13:42:09.524Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 16,
+              "Title": "RegisterRequest.cs",
+              "DocumentMoniker": "C:\\Users\\dovan\\topCv\\topCv.Application\\DTOs\\Auth\\RegisterRequest.cs",
+              "RelativeDocumentMoniker": "topCv.Application\\DTOs\\Auth\\RegisterRequest.cs",
+              "ToolTip": "C:\\Users\\dovan\\topCv\\topCv.Application\\DTOs\\Auth\\RegisterRequest.cs",
+              "RelativeToolTip": "topCv.Application\\DTOs\\Auth\\RegisterRequest.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAwAAAA4AAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-01-26T13:41:08.208Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 17,
+              "Title": "LoginRequest.cs",
+              "DocumentMoniker": "C:\\Users\\dovan\\topCv\\topCv.Application\\DTOs\\Auth\\LoginRequest.cs",
+              "RelativeDocumentMoniker": "topCv.Application\\DTOs\\Auth\\LoginRequest.cs",
+              "ToolTip": "C:\\Users\\dovan\\topCv\\topCv.Application\\DTOs\\Auth\\LoginRequest.cs",
+              "RelativeToolTip": "topCv.Application\\DTOs\\Auth\\LoginRequest.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAsAAAA4AAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-01-26T13:40:06.845Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 20,
+              "Title": "20260125175513_InitDb.cs",
+              "DocumentMoniker": "C:\\Users\\dovan\\topCv\\topCv.Infrastructure\\Migrations\\20260125175513_InitDb.cs",
+              "RelativeDocumentMoniker": "topCv.Infrastructure\\Migrations\\20260125175513_InitDb.cs",
+              "ToolTip": "C:\\Users\\dovan\\topCv\\topCv.Infrastructure\\Migrations\\20260125175513_InitDb.cs",
+              "RelativeToolTip": "topCv.Infrastructure\\Migrations\\20260125175513_InitDb.cs",
+              "ViewState": "AgIAACIAAAAAAAAAAAAkwDYAAAAnAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-01-25T17:55:13.28Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 21,
+              "Title": "appsettings.Development.json",
+              "DocumentMoniker": "C:\\Users\\dovan\\topCv\\topCv.Api\\appsettings.Development.json",
+              "RelativeDocumentMoniker": "topCv.Api\\appsettings.Development.json",
+              "ToolTip": "C:\\Users\\dovan\\topCv\\topCv.Api\\appsettings.Development.json",
+              "RelativeToolTip": "topCv.Api\\appsettings.Development.json",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001642|",
+              "WhenOpened": "2026-01-25T17:46:03.682Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 19,
+              "Title": "RefreshTokenConfiguration.cs",
+              "DocumentMoniker": "C:\\Users\\dovan\\topCv\\topCv.Infrastructure\\Configuration\\Auth\\RefreshTokenConfiguration.cs",
+              "RelativeDocumentMoniker": "topCv.Infrastructure\\Configuration\\Auth\\RefreshTokenConfiguration.cs",
+              "ToolTip": "C:\\Users\\dovan\\topCv\\topCv.Infrastructure\\Configuration\\Auth\\RefreshTokenConfiguration.cs",
+              "RelativeToolTip": "topCv.Infrastructure\\Configuration\\Auth\\RefreshTokenConfiguration.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAACYAAAAvAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-01-25T17:32:01.651Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 18,
+              "Title": "UserConfiguration.cs",
+              "DocumentMoniker": "C:\\Users\\dovan\\topCv\\topCv.Infrastructure\\Configuration\\Auth\\UserConfiguration.cs",
+              "RelativeDocumentMoniker": "topCv.Infrastructure\\Configuration\\Auth\\UserConfiguration.cs",
+              "ToolTip": "C:\\Users\\dovan\\topCv\\topCv.Infrastructure\\Configuration\\Auth\\UserConfiguration.cs",
+              "RelativeToolTip": "topCv.Infrastructure\\Configuration\\Auth\\UserConfiguration.cs",
+              "ViewState": "AgIAAAoAAAAAAAAAAAAkwBsAAABEAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-01-25T17:23:59.185Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 22,
+              "Title": "topCv.Infrastructure.csproj",
+              "DocumentMoniker": "C:\\Users\\dovan\\topCv\\topCv.Infrastructure\\topCv.Infrastructure.csproj",
+              "RelativeDocumentMoniker": "topCv.Infrastructure\\topCv.Infrastructure.csproj",
+              "ToolTip": "C:\\Users\\dovan\\topCv\\topCv.Infrastructure\\topCv.Infrastructure.csproj",
+              "RelativeToolTip": "topCv.Infrastructure\\topCv.Infrastructure.csproj",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000758|",
+              "WhenOpened": "2026-01-25T17:14:11.461Z",
+              "EditorCaption": ""
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}
