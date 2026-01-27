@@ -1,6 +1,0 @@
-<Solution>
-  <Project Path="topCv.Api/topCv.Api.csproj" />
-  <Project Path="topCv.Application/topCv.Application.csproj" />
-  <Project Path="topCv.Domain/topCv.Domain.csproj" />
-  <Project Path="topCv.Infrastructure/topCv.Infrastructure.csproj" />
-</Solution>
