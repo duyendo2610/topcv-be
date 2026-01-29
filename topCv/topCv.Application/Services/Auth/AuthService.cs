@@ -9,24 +9,27 @@ using topCv.Application.DTOs.Auth;
 using topCv.Application.Interfaces.Auth;
 using topCv.Domain.Entities.Auth;
 
-namespace topCv.Application.Services
+namespace topCv.Application.Services.Auth
 {
     public class AuthService : IAuthService
     {
         private readonly IAppDbContext _db;
         private readonly ITokenService _tokenService;
         private readonly IPasswordHasher _passwordHasher;
+        private readonly IHashService _hashService;
 
         private static readonly TimeSpan RefreshTokenLifetime = TimeSpan.FromDays(7);
 
         public AuthService(
             IAppDbContext db,
             ITokenService tokenService,
-            IPasswordHasher passwordHasher)
+            IPasswordHasher passwordHasher,
+            IHashService hashService)
         {
             _db = db;
             _tokenService = tokenService;
             _passwordHasher = passwordHasher;
+            _hashService = hashService;
         }
         public async Task<AuthResponse> LoginAsync(UserLoginRequest request, CancellationToken ct)
         {
@@ -72,6 +75,7 @@ namespace topCv.Application.Services
             {
                 Id = Guid.NewGuid(),
                 Email = email,
+                FullName = request.FullName,
                 Role = "User",
                 IsActive = true
             };
@@ -150,6 +154,39 @@ namespace topCv.Application.Services
                 AccessToken = accessToken,
                 RefreshToken = newRefresh
             };
+        }
+
+        public async Task LogoutAsync(string refreshToken, CancellationToken ct)
+        {
+            var hash = _hashService.Hash(refreshToken);
+
+            var stored = await _db.RefreshTokens
+                .FirstOrDefaultAsync(x => x.TokenHash == hash, ct);
+
+            if (stored == null)
+                return;
+
+            if (stored.RevokedAtUtc != null)
+                return;
+
+            stored.RevokedAtUtc = DateTime.UtcNow;
+
+            await _db.SaveChangesAsync(ct);
+        }
+
+        public async Task LogoutAllAsync(Guid userId, CancellationToken ct)
+        {
+            var tokens = await _db.RefreshTokens
+        .Where(x =>
+            x.UserId == userId &&
+            x.RevokedAtUtc == null &&
+            x.ExpiresAtUtc > DateTime.UtcNow)
+        .ToListAsync(ct);
+
+            foreach (var token in tokens)
+                token.RevokedAtUtc = DateTime.UtcNow;
+
+            await _db.SaveChangesAsync(ct);
         }
     }
 }

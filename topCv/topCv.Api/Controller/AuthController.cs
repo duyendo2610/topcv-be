@@ -21,21 +21,21 @@ namespace topCv.Api.Controller
         [HttpPost("register")]
         public async Task<IActionResult> Register([FromBody] UserRegisterRequest req, CancellationToken ct)
         {
-            var res = await _auth.RegisterAsync(req,ct);
-            return Ok(res); 
+            var res = await _auth.RegisterAsync(req, ct);
+            return Ok(res);
         }
 
         [HttpPost("login")]
-        public async Task<IActionResult> Login([FromBody] UserLoginRequest req,CancellationToken ct)
+        public async Task<IActionResult> Login([FromBody] UserLoginRequest req, CancellationToken ct)
         {
-            var res = await _auth.LoginAsync(req,ct);
+            var res = await _auth.LoginAsync(req, ct);
             return Ok(res);
         }
 
         [HttpPost("refresh")]
-        public async Task<IActionResult> Refresh([FromBody] UserRefreshTokenRequest req,CancellationToken ct)
+        public async Task<IActionResult> Refresh([FromBody] UserRefreshTokenRequest req, CancellationToken ct)
         {
-            var res = await _auth.RefreshAsync(req ,ct);
+            var res = await _auth.RefreshAsync(req, ct);
             return Ok(res);
         }
 
@@ -46,6 +46,25 @@ namespace topCv.Api.Controller
             var userId = User.FindFirst(System.Security.Claims.ClaimTypes.NameIdentifier)?.Value;
             var email = User.FindFirstValue(ClaimTypes.Email);
             return Ok(new { userId, email });
+        }
+
+        [Authorize]
+        [HttpPost("logout")]
+        public async Task<IActionResult> Logout([FromBody] LogoutRequest req,CancellationToken ct)
+        {
+            await _auth.LogoutAsync(req.RefreshToken, ct);
+            return Ok(new { message = "Logout success" });
+        }
+
+        [Authorize]
+        [HttpPost("logout-all")]
+        public async Task<IActionResult> LogoutAll(CancellationToken ct)
+        {
+            var userId = Guid.Parse(User.FindFirstValue(ClaimTypes.NameIdentifier)!);
+
+            await _auth.LogoutAllAsync(userId, ct);
+
+            return Ok(new { message = "Logout all devices success" });
         }
     }
 }

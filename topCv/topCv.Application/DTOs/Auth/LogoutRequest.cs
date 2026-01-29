@@ -6,8 +6,8 @@ using System.Threading.Tasks;
 
 namespace topCv.Application.DTOs.Auth
 {
-    public class UserRefreshTokenRequest
+    public class LogoutRequest
     {
-        public string RefreshToken { get; init; } = default!;
+        public string RefreshToken { get; init; } = null!;
     }
 }

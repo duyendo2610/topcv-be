@@ -1,16 +1,17 @@
 ﻿using Microsoft.AspNetCore.Authentication.JwtBearer;
-using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
-using System;
+using Microsoft.OpenApi.Models;
 using System.Text;
 using topCv.Application.Common;
 using topCv.Application.Interfaces.Auth;
-using topCv.Application.Services;
+using topCv.Application.Interfaces.Obj;
+using topCv.Application.Services.Auth;
+using topCv.Application.Services.Obj;
 using topCv.Domain.Entities.Auth;
 using topCv.Infrastructure.Persistence;
+using topCv.Infrastructure.Repositories;
 using topCv.Infrastructure.Security;
-using Microsoft.OpenApi.Models;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -25,6 +26,14 @@ builder.Services.AddScoped<IPasswordHasher, PasswordHasherService>();
 builder.Services.AddScoped<IAppDbContext, AppDbContext>();
 builder.Services.AddScoped<ITokenService, TokenService>();
 builder.Services.AddScoped<IAuthService, AuthService>();
+builder.Services.AddScoped<IHashService, Sha256HashService>();
+builder.Services.AddScoped<ICityService, CityService>();
+builder.Services.AddScoped<ICategoryService, CategoryService>();
+builder.Services.AddScoped<ISkillService, SkillService>();
+builder.Services.AddScoped<ICompanyService, CompanyService>();
+builder.Services.AddScoped<IJobService, JobService>();
+builder.Services.AddScoped<IFileStorage, LocalFileStorage>();
+builder.Services.AddScoped<IResumeFileService, ResumeFileService>();
 //Test Connect Db
 builder.Services.AddDbContext<AppDbContext>(options =>
     options.UseSqlServer(
