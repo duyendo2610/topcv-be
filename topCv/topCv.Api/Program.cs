@@ -8,6 +8,7 @@ using topCv.Application.Interfaces.Auth;
 using topCv.Application.Interfaces.Obj;
 using topCv.Application.Services.Auth;
 using topCv.Application.Services.Obj;
+using topCv.Domain.Common;
 using topCv.Domain.Entities.Auth;
 using topCv.Infrastructure.Persistence;
 using topCv.Infrastructure.Repositories;
@@ -34,6 +35,24 @@ builder.Services.AddScoped<ICompanyService, CompanyService>();
 builder.Services.AddScoped<IJobService, JobService>();
 builder.Services.AddScoped<IFileStorage, LocalFileStorage>();
 builder.Services.AddScoped<IResumeFileService, ResumeFileService>();
+builder.Services.AddScoped<IJobApplicationService, JobApplicationService>();
+builder.Services.AddScoped<ISavedJobService, SavedJobService>();
+builder.Services.AddScoped<IFollowCompanyService, FollowCompanyService>();
+builder.Services.AddScoped<IEmployerDashboardService, EmployerDashboardService>();
+builder.Services.AddScoped<INotificationService, NotificationService>();
+builder.Services.AddScoped<IJobMatchService, JobMatchService>();
+
+builder.Services.AddAuthorization(options =>
+{
+    options.AddPolicy("CandidateOnly", p =>
+        p.RequireRole(AppRoles.Candidate));
+
+    options.AddPolicy("EmployerOnly", p =>
+        p.RequireRole(AppRoles.Employer));
+
+    options.AddPolicy("AdminOnly", p =>
+        p.RequireRole(AppRoles.Admin));
+});
 //Test Connect Db
 builder.Services.AddDbContext<AppDbContext>(options =>
     options.UseSqlServer(
