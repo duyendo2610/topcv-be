@@ -1,0 +1,66 @@
+version: '3.8'
+
+services:
+  sqlserver:
+    image: mcr.microsoft.com/mssql/server:2022-latest
+    container_name: topcv-sqlserver
+    environment:
+      - ACCEPT_EULA=Y
+      - SA_PASSWORD=${SA_PASSWORD:-TopCv@2024!Strong}
+      - MSSQL_PID=Developer
+    ports:
+      - "1433:1433"
+    volumes:
+      - sqlserver-data:/var/opt/mssql
+    networks:
+      - topcv-network
+    healthcheck:
+      test: /opt/mssql-tools18/bin/sqlcmd -S localhost -U sa -P "$$SA_PASSWORD" -Q "SELECT 1" -C -b -o /dev/null
+      interval: 10s
+
+      timeout: 3s
+      retries: 10
+      start_period: 30s
+    restart: unless-stopped
+
+  topcv-api:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: topcv-api
+    environment:
+      - ASPNETCORE_ENVIRONMENT=${ASPNETCORE_ENVIRONMENT:-Development}
+      - ASPNETCORE_URLS=http://+:8080
+      - ConnectionStrings__DefaultConnection=Server=sqlserver;Database=topCv;User Id=sa;Password=${SA_PASSWORD:-TopCv@2024!Strong};TrustServerCertificate=True;
+      - Jwt__Issuer=${JWT_ISSUER:-TopCV}
+      - Jwt__Audience=${JWT_AUDIENCE:-TopCV.Client}
+      - Jwt__Key=${JWT_KEY:-YOUR_SUPER_SECRET_KEY_AT_LEAST_32_CHARACTERS_LONG_FOR_PRODUCTION}
+      - Jwt__AccessTokenMinutes=${JWT_ACCESS_TOKEN_MINUTES:-30}
+      - Jwt__RefreshTokenDays=${JWT_REFRESH_TOKEN_DAYS:-7}
+      - FileStorage__UploadPath=/app/uploads
+    ports:
+      - "5000:8080"
+    volumes:
+      - uploads:/app/uploads
+    networks:
+      - topcv-network
+    depends_on:
+      sqlserver:
+        condition: service_healthy
+    healthcheck:
+      test: curl -f http://localhost:8080/swagger/index.html || exit 1
+      interval: 30s
+      timeout: 3s
+      retries: 3
+      start_period: 60s
+    restart: unless-stopped
+
+networks:
+  topcv-network:
+    driver: bridge
+
+volumes:
+  sqlserver-data:
+    driver: local
+  uploads:
+    driver: local

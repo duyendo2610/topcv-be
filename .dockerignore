@@ -1,0 +1,66 @@
+# Git
+.git
+.gitignore
+.gitattributes
+
+# IDE
+.vs
+.vscode
+.idea
+*.suo
+*.user
+*.userosscache
+*.sln.docstates
+
+# Build outputs
+**/bin/
+**/obj/
+**/out/
+**/publish/
+
+# NuGet
+*.nupkg
+*.snupkg
+.nuget/
+packages/
+
+# Test results
+TestResults/
+*.trx
+*.coverage
+
+# User-specific files
+*.suo
+*.user
+*.sln.docstates
+
+# Environment and secrets
+.env
+.env.local
+*.pfx
+*.p12
+
+# Docker
+docker-compose*.yml
+!docker-compose.yml
+Dockerfile*
+!Dockerfile
+.dockerignore
+
+# Documentation
+*.md
+!README.md
+
+# OS files
+.DS_Store
+Thumbs.db
+
+# Temporary files
+*.tmp
+*.temp
+*.log
+*.cache
+
+# Node modules (if any)
+node_modules/
+npm-debug.log*
