@@ -139,7 +139,7 @@ namespace topCv.Application.Services.Obj
             var query = _db.Jobs
                 .AsNoTracking()
                 .Include(x => x.Company)
-                .Include(x => x.City)
+                .Include(x => x.Province)
                 .Include(x => x.JobSkills)
                 .Include(x => x.JobCategories)
                 .AsQueryable();
@@ -241,7 +241,7 @@ namespace topCv.Application.Services.Obj
             return await _db.Jobs
                 .AsNoTracking()
                 .Include(x => x.Company)
-                .Include(x => x.City)
+                .Include(x => x.Province)
                 .Include(x => x.JobSkills)
                 .Include(x => x.JobCategories)
                 .FirstOrDefaultAsync(x => x.Id == id, ct);

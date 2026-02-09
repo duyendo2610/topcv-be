@@ -31,7 +31,7 @@ namespace topCv.Application.Services.Obj
             await _db.SaveChangesAsync(ct);
             // muốn có CityName thì query lại include City (vì vừa add chưa include navigation)
             var saved = await _db.Companies
-                .Include(x => x.City)
+                .Include(x => x.Province)
                 .AsNoTracking()
                 .FirstAsync(x => x.Id == company.Id, ct);
 
@@ -45,7 +45,7 @@ namespace topCv.Application.Services.Obj
             CancellationToken ct)
         {
             var company = await _db.Companies
-                .Include(x => x.City)
+                .Include(x => x.Province)
                 .FirstOrDefaultAsync(x => x.Id == id, ct)
                 ?? throw new KeyNotFoundException("Company not found.");
 
@@ -66,7 +66,7 @@ namespace topCv.Application.Services.Obj
 
             // refresh city navigation (nếu CityId thay đổi)
             var updated = await _db.Companies
-                .Include(x => x.City)
+                .Include(x => x.Province)
                 .AsNoTracking()
                 .FirstAsync(x => x.Id == id, ct);
 
@@ -76,7 +76,7 @@ namespace topCv.Application.Services.Obj
         public async Task<CompanyResponse> GetByIdAsync(Guid id, CancellationToken ct)
         {
             var company = await _db.Companies
-                .Include(x => x.City)
+                .Include(x => x.Province)
                 .AsNoTracking()
                 .FirstOrDefaultAsync(x => x.Id == id, ct)
                 ?? throw new KeyNotFoundException("Company not found.");
@@ -87,7 +87,7 @@ namespace topCv.Application.Services.Obj
         public async Task<List<CompanyResponse>> GetAllAsync(CancellationToken ct)
         {
             var companies = await _db.Companies
-                .Include(x => x.City)
+                .Include(x => x.Province)
                 .AsNoTracking()
                 .OrderByDescending(x => x.CreatedAt) // nếu entity có CreatedAt
                 .ToListAsync(ct);
@@ -98,7 +98,7 @@ namespace topCv.Application.Services.Obj
         public async Task<List<CompanyResponse>> GetMyCompaniesAsync(Guid userId, CancellationToken ct)
         {
             var companies = await _db.Companies
-                .Include(x => x.City)
+                .Include(x => x.Province)
                 .AsNoTracking()
                 .Where(x => x.OwnerUserId == userId)
                 .OrderByDescending(x => x.CreatedAt) // nếu có

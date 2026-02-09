@@ -32,7 +32,7 @@ namespace topCv.Domain.Entities.Obj
         public DateTime? UpdatedAt { get; set; }
 
         public User OwnerUser { get; set; } = default!;
-        public City? City { get; set; }
+        public Province? Province { get; set; }
 
         public ICollection<Job> Jobs { get; set; } = new List<Job>();
         public ICollection<FollowCompany> Followers { get; set; } = new List<FollowCompany>();

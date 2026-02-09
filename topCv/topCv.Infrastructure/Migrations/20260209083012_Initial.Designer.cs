@@ -12,8 +12,8 @@ using topCv.Infrastructure.Persistence;
 namespace topCv.Infrastructure.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    [Migration("20260129072928_MakeCategoryParentNullable")]
-    partial class MakeCategoryParentNullable
+    [Migration("20260209083012_Initial")]
+    partial class Initial
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -173,27 +173,6 @@ namespace topCv.Infrastructure.Migrations
                     b.HasIndex("ParentId");
 
                     b.ToTable("Categories", (string)null);
-                });
-
-            modelBuilder.Entity("topCv.Domain.Entities.Obj.City", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
-
-                    b.Property<string>("Name")
-                        .IsRequired()
-                        .HasMaxLength(120)
-                        .HasColumnType("nvarchar(120)");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("Name")
-                        .IsUnique();
-
-                    b.ToTable("Cities", (string)null);
                 });
 
             modelBuilder.Entity("topCv.Domain.Entities.Obj.Company", b =>
@@ -467,6 +446,41 @@ namespace topCv.Infrastructure.Migrations
                     b.ToTable("Notifications", (string)null);
                 });
 
+            modelBuilder.Entity("topCv.Domain.Entities.Obj.Province", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<int>("Code")
+                        .HasColumnType("int");
+
+                    b.Property<string>("Codename")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("DivisionType")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasMaxLength(120)
+                        .HasColumnType("nvarchar(120)");
+
+                    b.Property<int>("PhoneCode")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("Code")
+                        .IsUnique();
+
+                    b.ToTable("Provinces", (string)null);
+                });
+
             modelBuilder.Entity("topCv.Domain.Entities.Obj.Resume", b =>
                 {
                     b.Property<Guid>("Id")
@@ -615,6 +629,43 @@ namespace topCv.Infrastructure.Migrations
                     b.ToTable("Skills", (string)null);
                 });
 
+            modelBuilder.Entity("topCv.Domain.Entities.Object.Ward", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<int>("Code")
+                        .HasColumnType("int");
+
+                    b.Property<string>("Codename")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("DivisionType")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("ProvinceId")
+                        .HasColumnType("int");
+
+                    b.Property<string>("ShortCodename")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("ProvinceId");
+
+                    b.ToTable("Wards");
+                });
+
             modelBuilder.Entity("topCv.Domain.Entities.Auth.RefreshToken", b =>
                 {
                     b.HasOne("topCv.Domain.Entities.Auth.User", "User")
@@ -628,7 +679,7 @@ namespace topCv.Infrastructure.Migrations
 
             modelBuilder.Entity("topCv.Domain.Entities.Obj.CandidateProfile", b =>
                 {
-                    b.HasOne("topCv.Domain.Entities.Obj.City", "City")
+                    b.HasOne("topCv.Domain.Entities.Obj.Province", "Province")
                         .WithMany("CandidateProfiles")
                         .HasForeignKey("CityId")
                         .OnDelete(DeleteBehavior.Restrict);
@@ -639,7 +690,7 @@ namespace topCv.Infrastructure.Migrations
                         .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
-                    b.Navigation("City");
+                    b.Navigation("Province");
 
                     b.Navigation("User");
                 });
@@ -656,7 +707,7 @@ namespace topCv.Infrastructure.Migrations
 
             modelBuilder.Entity("topCv.Domain.Entities.Obj.Company", b =>
                 {
-                    b.HasOne("topCv.Domain.Entities.Obj.City", "City")
+                    b.HasOne("topCv.Domain.Entities.Obj.Province", "Province")
                         .WithMany("Companies")
                         .HasForeignKey("CityId")
                         .OnDelete(DeleteBehavior.Restrict);
@@ -667,9 +718,9 @@ namespace topCv.Infrastructure.Migrations
                         .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
-                    b.Navigation("City");
-
                     b.Navigation("OwnerUser");
+
+                    b.Navigation("Province");
                 });
 
             modelBuilder.Entity("topCv.Domain.Entities.Obj.FollowCompany", b =>
@@ -693,7 +744,7 @@ namespace topCv.Infrastructure.Migrations
 
             modelBuilder.Entity("topCv.Domain.Entities.Obj.Job", b =>
                 {
-                    b.HasOne("topCv.Domain.Entities.Obj.City", "City")
+                    b.HasOne("topCv.Domain.Entities.Obj.Province", "Province")
                         .WithMany("Jobs")
                         .HasForeignKey("CityId")
                         .OnDelete(DeleteBehavior.Restrict);
@@ -710,11 +761,11 @@ namespace topCv.Infrastructure.Migrations
                         .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
-                    b.Navigation("City");
-
                     b.Navigation("Company");
 
                     b.Navigation("CreatedByUser");
+
+                    b.Navigation("Province");
                 });
 
             modelBuilder.Entity("topCv.Domain.Entities.Obj.JobApplication", b =>
@@ -851,6 +902,17 @@ namespace topCv.Infrastructure.Migrations
                     b.Navigation("User");
                 });
 
+            modelBuilder.Entity("topCv.Domain.Entities.Object.Ward", b =>
+                {
+                    b.HasOne("topCv.Domain.Entities.Obj.Province", "Province")
+                        .WithMany("Wards")
+                        .HasForeignKey("ProvinceId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Province");
+                });
+
             modelBuilder.Entity("topCv.Domain.Entities.Auth.User", b =>
                 {
                     b.Navigation("CandidateProfile");
@@ -879,15 +941,6 @@ namespace topCv.Infrastructure.Migrations
                     b.Navigation("JobCategories");
                 });
 
-            modelBuilder.Entity("topCv.Domain.Entities.Obj.City", b =>
-                {
-                    b.Navigation("CandidateProfiles");
-
-                    b.Navigation("Companies");
-
-                    b.Navigation("Jobs");
-                });
-
             modelBuilder.Entity("topCv.Domain.Entities.Obj.Company", b =>
                 {
                     b.Navigation("Followers");
@@ -904,6 +957,17 @@ namespace topCv.Infrastructure.Migrations
                     b.Navigation("JobSkills");
 
                     b.Navigation("SavedByUsers");
+                });
+
+            modelBuilder.Entity("topCv.Domain.Entities.Obj.Province", b =>
+                {
+                    b.Navigation("CandidateProfiles");
+
+                    b.Navigation("Companies");
+
+                    b.Navigation("Jobs");
+
+                    b.Navigation("Wards");
                 });
 
             modelBuilder.Entity("topCv.Domain.Entities.Obj.Resume", b =>

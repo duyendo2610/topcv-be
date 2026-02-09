@@ -39,7 +39,7 @@ namespace topCv.Application.Mappings
                 Size = entity.Size,
                 Description = entity.Description,
                 CityId = entity.CityId,
-                CityName = entity.City?.Name,
+                CityName = entity.Province?.Name,
                 Address = entity.Address,
                 LogoUrl = entity.LogoUrl,
                 CoverUrl = entity.CoverUrl,

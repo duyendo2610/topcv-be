@@ -44,7 +44,7 @@ namespace topCv.Application.Services.Obj
                 .Where(j => j.Status == JobStatus.Published)
                 .Where(j => j.DeadlineAt == null || j.DeadlineAt > now)
                 .Include(j => j.Company)
-                .Include(j => j.City)
+                .Include(j => j.Province)
                 .OrderByDescending(j => j.CreatedAt)
                 .ToListAsync(ct);
 
@@ -90,7 +90,7 @@ namespace topCv.Application.Services.Obj
                     CompanyName = x.Job.Company?.Name ?? string.Empty,
 
                     CityId = x.Job.CityId,
-                    CityName = x.Job.City != null ? x.Job.City.Name : null,
+                    CityName = x.Job.Province != null ? x.Job.Province.Name : null,
 
                     SalaryMin = x.Job.SalaryMin,
                     SalaryMax = x.Job.SalaryMax,
