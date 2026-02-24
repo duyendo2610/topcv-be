@@ -1,12 +1,7 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using topCv.Domain.Entities.Auth;
-using topCv.Domain.Entities.Obj;
+using topCv.Domain.Entities.Commons;
 
 namespace topCv.Infrastructure.Configuration.Auth
 {
@@ -26,7 +21,7 @@ namespace topCv.Infrastructure.Configuration.Auth
             builder.Property(x => x.FullName).HasMaxLength(150).IsRequired();
             builder.Property(x => x.Phone).HasMaxLength(30);
 
-            builder.Property(x => x.Role).IsRequired(); 
+            builder.Property(x => x.Role).IsRequired();
             builder.Property(x => x.IsActive).HasDefaultValue(true).IsRequired();
 
             builder.Property(x => x.CreatedAtUtc).IsRequired();

@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using topCv.Domain.Entities.Auth;
+﻿using topCv.Domain.Entities.Auth;
 
 namespace topCv.Application.Interfaces.Auth
 {

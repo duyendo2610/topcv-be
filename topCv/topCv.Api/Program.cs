@@ -1,20 +1,17 @@
-﻿using Microsoft.AspNetCore.Authentication.JwtBearer;
+﻿using System.Text;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
-using System.Text;
 using topCv.Application.Common;
 using topCv.Application.Interfaces.Auth;
-using topCv.Application.Interfaces.Obj;
-using topCv.Application.Interfaces.Object;
+using topCv.Application.Interfaces.Commons;
 using topCv.Application.Services.Auth;
-using topCv.Application.Services.Obj;
+using topCv.Application.Services.Commons;
 using topCv.Domain.Common;
-using topCv.Domain.Entities.Auth;
 using topCv.Infrastructure.Persistence;
 using topCv.Infrastructure.Repositories;
 using topCv.Infrastructure.Security;
-using topCv.Application.Services.Object;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -60,6 +57,7 @@ builder.Services.AddAuthorization(options =>
     options.AddPolicy("AdminOnly", p =>
         p.RequireRole(AppRoles.Admin));
 });
+
 //Test Connect Db
 builder.Services.AddDbContext<AppDbContext>(options =>
     options.UseSqlServer(
@@ -113,7 +111,7 @@ builder.Services.AddSwaggerGen(c =>
                     Id = "Bearer"
                 }
             },
-            new string[] {}
+            new string[] { }
         }
     });
 });
@@ -124,9 +122,9 @@ builder.Services.AddCors(options =>
         policy =>
         {
             policy.WithOrigins("http://localhost:3000")
-                  .AllowAnyHeader()
-                  .AllowAnyMethod()
-                  .AllowCredentials();
+                .AllowAnyHeader()
+                .AllowAnyMethod()
+                .AllowCredentials();
         });
 });
 

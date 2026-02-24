@@ -1,7 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using topCv.Application.DTOs.Obj;
-using topCv.Application.Interfaces.Obj;
-using topCv.Application.Services.Obj;
+using topCv.Application.Interfaces.Commons;
 
 namespace topCv.Api.Controller
 {
@@ -26,7 +24,5 @@ namespace topCv.Api.Controller
             var result = await _service.SearchAsync(keyword, ct);
             return Ok(result);
         }
-
     }
-
 }

@@ -1,15 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using topCv.Application.DTOs.Obj;
-using topCv.Domain.Entities.Obj;
+﻿using topCv.Application.DTOs.Commons;
+using topCv.Domain.Entities.Commons;
 using topCv.Domain.Enums;
 
 namespace topCv.Application.Mappings
 {
-
     public static class ApplicationMapping
     {
         // CREATE

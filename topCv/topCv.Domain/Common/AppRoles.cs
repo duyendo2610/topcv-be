@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace topCv.Domain.Common
+﻿namespace topCv.Domain.Common
 {
     public static class AppRoles
     {
@@ -12,5 +6,4 @@ namespace topCv.Domain.Common
         public const string Employer = "Employer";
         public const string Admin = "Admin";
     }
-
 }

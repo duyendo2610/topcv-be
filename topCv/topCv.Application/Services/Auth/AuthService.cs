@@ -1,9 +1,4 @@
 ﻿using Microsoft.EntityFrameworkCore;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using topCv.Application.Common;
 using topCv.Application.DTOs.Auth;
 using topCv.Application.Interfaces.Auth;
@@ -31,6 +26,7 @@ namespace topCv.Application.Services.Auth
             _passwordHasher = passwordHasher;
             _hashService = hashService;
         }
+
         public async Task<AuthResponse> LoginAsync(UserLoginRequest request, CancellationToken ct)
         {
             var email = request.Email.Trim().ToLowerInvariant();
@@ -177,11 +173,11 @@ namespace topCv.Application.Services.Auth
         public async Task LogoutAllAsync(Guid userId, CancellationToken ct)
         {
             var tokens = await _db.RefreshTokens
-        .Where(x =>
-            x.UserId == userId &&
-            x.RevokedAtUtc == null &&
-            x.ExpiresAtUtc > DateTime.UtcNow)
-        .ToListAsync(ct);
+                .Where(x =>
+                    x.UserId == userId &&
+                    x.RevokedAtUtc == null &&
+                    x.ExpiresAtUtc > DateTime.UtcNow)
+                .ToListAsync(ct);
 
             foreach (var token in tokens)
                 token.RevokedAtUtc = DateTime.UtcNow;

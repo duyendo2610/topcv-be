@@ -1,6 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using topCv.Application.DTOs.Obj;
-using topCv.Application.Interfaces.Obj;
+using topCv.Application.DTOs.Commons;
+using topCv.Application.Interfaces.Commons;
 
 namespace topCv.Api.Controller
 {

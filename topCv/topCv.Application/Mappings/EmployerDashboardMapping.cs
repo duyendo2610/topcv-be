@@ -1,14 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using topCv.Application.DTOs.Obj;
-using topCv.Domain.Entities.Obj;
+﻿using topCv.Application.DTOs.Commons;
+using topCv.Domain.Entities.Commons;
 
 namespace topCv.Application.Mappings
 {
-
     public static class EmployerDashboardMapping
     {
         public static EmployerCompanyResponse ToEmployerResponse(this Company entity)

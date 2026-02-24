@@ -1,9 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Security.Cryptography;
+﻿using System.Security.Cryptography;
 using System.Text;
-using System.Threading.Tasks;
 using topCv.Application.Common;
 
 namespace topCv.Infrastructure.Security
@@ -16,7 +12,7 @@ namespace topCv.Infrastructure.Security
             var bytes = Encoding.UTF8.GetBytes(input);
             var hashBytes = sha.ComputeHash(bytes);
 
-            return Convert.ToHexString(hashBytes); 
+            return Convert.ToHexString(hashBytes);
         }
     }
 }

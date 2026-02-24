@@ -1,9 +1,8 @@
-﻿using Microsoft.AspNetCore.Authorization;
+﻿using System.Security.Claims;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using System.Security.Claims;
-using topCv.Domain.Entities.Auth;
-using topCv.Application.Interfaces.Obj;
-using topCv.Application.DTOs.Obj;
+using topCv.Application.DTOs.Commons;
+using topCv.Application.Interfaces.Commons;
 
 namespace topCv.Api.Controller
 {
@@ -42,13 +41,15 @@ namespace topCv.Api.Controller
         // Employer: update application status
         [Authorize]
         [HttpPatch("{id:guid}/status")]
-        public async Task<IActionResult> UpdateStatus(Guid id, [FromBody] UpdateJobApplicationStatusRequest req, CancellationToken ct)
+        public async Task<IActionResult> UpdateStatus(Guid id, [FromBody] UpdateJobApplicationStatusRequest req,
+            CancellationToken ct)
             => Ok(await _service.UpdateStatusAsync(id, req, UserId, ct));
 
         // Candidate: update my application content (optional endpoint)
         [Authorize]
         [HttpPatch("{id:guid}")]
-        public async Task<IActionResult> UpdateMy(Guid id, [FromBody] UpdateJobApplicationRequest req, CancellationToken ct)
+        public async Task<IActionResult> UpdateMy(Guid id, [FromBody] UpdateJobApplicationRequest req,
+            CancellationToken ct)
             => Ok(await _service.UpdateMyApplicationAsync(id, req, UserId, ct));
     }
 }

@@ -1,8 +1,7 @@
-﻿using Microsoft.AspNetCore.Authorization;
+﻿using System.Security.Claims;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using System.Security.Claims;
-using topCv.Application.Interfaces.Obj;
-using topCv.Domain.Entities.Auth;
+using topCv.Application.Interfaces.Commons;
 
 namespace topCv.Api.Controller
 {

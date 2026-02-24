@@ -1,10 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using topCv.Application.DTOs.Object;
-using topCv.Domain.Entities.Object;
+﻿using topCv.Application.DTOs.Commons;
+using topCv.Domain.Entities.Commons;
 
 namespace topCv.Application.Mappings
 {

@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Security.Cryptography;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Security.Cryptography;
 using topCv.Application.Common;
 using topCv.Domain.Entities.Auth;
 
@@ -14,14 +9,15 @@ namespace topCv.Infrastructure.Security
         private const int SaltSize = 16;
         private const int KeySize = 32;
         private const int Iterations = 100_000;
+
         public string Hash(User user, string password)
         {
             using var algorithm = new Rfc2898DeriveBytes(
-                 password,
-                 SaltSize,
-                 Iterations,
-                 HashAlgorithmName.SHA256
-             );
+                password,
+                SaltSize,
+                Iterations,
+                HashAlgorithmName.SHA256
+            );
             var salt = algorithm.Salt;
             var key = algorithm.GetBytes(KeySize);
 

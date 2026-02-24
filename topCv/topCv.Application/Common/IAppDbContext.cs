@@ -1,11 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using topCv.Domain.Entities.Auth;
-using topCv.Domain.Entities.Obj;
-using topCv.Domain.Entities.Object;
+using topCv.Domain.Entities.Commons;
 
 namespace topCv.Application.Common
 {
@@ -13,26 +8,26 @@ namespace topCv.Application.Common
     {
         DbSet<User> Users { get; }
         DbSet<RefreshToken> RefreshTokens { get; }
-        DbSet<Province> Provinces { get;}
-        DbSet<Ward> Wards { get;}
+        DbSet<Province> Provinces { get; }
+        DbSet<Ward> Wards { get; }
 
         DbSet<CandidateProfile> CandidateProfiles { get; }
         DbSet<Resume> Resumes { get; }
         DbSet<ResumeSection> ResumeSections { get; }
-        DbSet<ResumeFile> ResumeFiles { get;}
+        DbSet<ResumeFile> ResumeFiles { get; }
 
         DbSet<Company> Companies { get; }
-        DbSet<Job> Jobs { get;}
+        DbSet<Job> Jobs { get; }
 
         DbSet<Skill> Skills { get; }
-        DbSet<JobSkill> JobSkills { get;}
+        DbSet<JobSkill> JobSkills { get; }
 
         DbSet<Category> Categories { get; }
-        DbSet<JobCategory> JobCategories { get;}
+        DbSet<JobCategory> JobCategories { get; }
 
         DbSet<JobApplication> JobApplications { get; }
         DbSet<SavedJob> SavedJobs { get; }
-        DbSet<FollowCompany> FollowCompanies { get;}
+        DbSet<FollowCompany> FollowCompanies { get; }
 
         DbSet<Notification> Notifications { get; }
 

@@ -1,5 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using topCv.Application.Interfaces.Object;
+using topCv.Application.Interfaces.Commons;
 
 namespace topCv.Api.Controller
 {
@@ -29,6 +29,7 @@ namespace topCv.Api.Controller
             var result = await _wardService.GetByProvinceIdAsync(provinceId);
             return Ok(result);
         }
+
         // GET: api/wards/search?keyword=ba dinh
         [HttpGet("search")]
         public async Task<IActionResult> Search(

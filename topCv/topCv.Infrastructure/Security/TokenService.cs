@@ -1,13 +1,9 @@
-﻿using Microsoft.Extensions.Options;
-using Microsoft.IdentityModel.Tokens;
-using System;
-using System.Collections.Generic;
-using System.IdentityModel.Tokens.Jwt;
-using System.Linq;
+﻿using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
 using System.Security.Cryptography;
 using System.Text;
-using System.Threading.Tasks;
+using Microsoft.Extensions.Options;
+using Microsoft.IdentityModel.Tokens;
 using topCv.Application.Interfaces.Auth;
 using topCv.Domain.Entities.Auth;
 
@@ -16,6 +12,7 @@ namespace topCv.Infrastructure.Security
     public class TokenService : ITokenService
     {
         private readonly JwtSetting _jwt;
+
         public TokenService(IOptions<JwtSetting> jwt)
         {
             _jwt = jwt.Value;
@@ -30,10 +27,13 @@ namespace topCv.Infrastructure.Security
 
             var claims = new[]
             {
-            new Claim(JwtRegisteredClaimNames.Sub, user.Id.ToString()),
-            new Claim(JwtRegisteredClaimNames.Email, user.Email),
-            new Claim(ClaimTypes.Role, user.Role),
-        };
+                // Include both JWT standard claims and .NET ClaimTypes for compatibility.
+                new Claim(JwtRegisteredClaimNames.Sub, user.Id.ToString()),
+                new Claim(ClaimTypes.NameIdentifier, user.Id.ToString()),
+                new Claim(JwtRegisteredClaimNames.Email, user.Email),
+                new Claim(ClaimTypes.Email, user.Email),
+                new Claim(ClaimTypes.Role, user.Role),
+            };
 
             var token = new JwtSecurityToken(
                 issuer: _jwt.Issuer,

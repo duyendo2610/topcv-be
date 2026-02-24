@@ -1,8 +1,7 @@
-﻿using Microsoft.AspNetCore.Authorization;
+﻿using System.Security.Claims;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using System.Security.Claims;
-using topCv.Application.Services.Obj;
-using topCv.Domain.Entities.Auth;
+using topCv.Application.Interfaces.Commons;
 
 namespace topCv.Api.Controller
 {
@@ -31,5 +30,4 @@ namespace topCv.Api.Controller
         public async Task<IActionResult> GetJobs(Guid companyId, CancellationToken ct)
             => Ok(await _service.GetJobsByCompanyAsync(companyId, UserId, ct));
     }
-
 }

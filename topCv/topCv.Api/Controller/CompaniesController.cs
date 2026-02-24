@@ -1,8 +1,8 @@
-﻿using Microsoft.AspNetCore.Authorization;
+﻿using System.Security.Claims;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using System.Security.Claims;
-using topCv.Application.DTOs.Obj;
-using topCv.Application.Interfaces.Obj;
+using topCv.Application.DTOs.Commons;
+using topCv.Application.Interfaces.Commons;
 
 namespace topCv.Api.Controller
 {
@@ -21,15 +21,15 @@ namespace topCv.Api.Controller
 
         [Authorize]
         [HttpPost]
-        public async Task<IActionResult> Create(CreateCompanyRequest req,CancellationToken ct)
+        public async Task<IActionResult> Create(CreateCompanyRequest req, CancellationToken ct)
         {
             return Ok(await _service.CreateAsync(req, UserId, ct));
         }
-            
+
 
         [Authorize]
         [HttpPut("{id:guid}")]
-        public async Task<IActionResult> Update(Guid id,UpdateCompanyRequest req,CancellationToken ct)
+        public async Task<IActionResult> Update(Guid id, UpdateCompanyRequest req, CancellationToken ct)
             => Ok(await _service.UpdateAsync(id, req, UserId, ct));
 
         [HttpGet("{id:guid}")]
@@ -44,7 +44,7 @@ namespace topCv.Api.Controller
         [HttpGet("me")]
         public async Task<IActionResult> GetMine(CancellationToken ct)
             => Ok(await _service.GetMyCompaniesAsync(UserId, ct));
-        
+
         [Authorize]
         [HttpDelete("{id:guid}")]
         public async Task<IActionResult> Delete(Guid id, CancellationToken ct)

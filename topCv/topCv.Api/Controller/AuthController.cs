@@ -1,21 +1,25 @@
-﻿using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Identity.Data;
-using Microsoft.AspNetCore.Mvc;
+﻿using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
+using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
+using topCv.Application.Common;
 using topCv.Application.DTOs.Auth;
 using topCv.Application.Interfaces.Auth;
 
 namespace topCv.Api.Controller
 {
     [ApiController]
-    [Route("api/[controller]")]
+    [Route("api/auth")]
     public class AuthController : ControllerBase
     {
         private readonly IAuthService _auth;
+        private readonly IAppDbContext _db;
 
-        public AuthController(IAuthService auth)
+        public AuthController(IAuthService auth, IAppDbContext db)
         {
             _auth = auth;
+            _db = db;
         }
 
         [HttpPost("register")]
@@ -41,16 +45,43 @@ namespace topCv.Api.Controller
 
         [Authorize]
         [HttpGet("me")]
-        public IActionResult Me()
+        public async Task<IActionResult> Me(CancellationToken ct)
         {
-            var userId = User.FindFirst(System.Security.Claims.ClaimTypes.NameIdentifier)?.Value;
-            var email = User.FindFirstValue(ClaimTypes.Email);
-            return Ok(new { userId, email });
+            var userIdRaw =
+                User.FindFirstValue(ClaimTypes.NameIdentifier)
+                ?? User.FindFirstValue(JwtRegisteredClaimNames.Sub);
+
+            if (!Guid.TryParse(userIdRaw, out var userId))
+            {
+                return Unauthorized(new { message = "Token missing or invalid user id claim." });
+            }
+
+            var me = await _db.Users
+                .AsNoTracking()
+                .Where(x => x.Id == userId)
+                .Select(x => new
+                {
+                    x.Id,
+                    x.Email,
+                    x.FullName,
+                    x.Phone,
+                    x.Role,
+                    x.IsActive,
+                    x.CreatedAtUtc
+                })
+                .FirstOrDefaultAsync(ct);
+
+            if (me is null)
+            {
+                return NotFound(new { message = "User not found." });
+            }
+
+            return Ok(me);
         }
 
         [Authorize]
         [HttpPost("logout")]
-        public async Task<IActionResult> Logout([FromBody] LogoutRequest req,CancellationToken ct)
+        public async Task<IActionResult> Logout([FromBody] LogoutRequest req, CancellationToken ct)
         {
             await _auth.LogoutAsync(req.RefreshToken, ct);
             return Ok(new { message = "Logout success" });
@@ -60,7 +91,14 @@ namespace topCv.Api.Controller
         [HttpPost("logout-all")]
         public async Task<IActionResult> LogoutAll(CancellationToken ct)
         {
-            var userId = Guid.Parse(User.FindFirstValue(ClaimTypes.NameIdentifier)!);
+            var userIdRaw =
+                User.FindFirstValue(ClaimTypes.NameIdentifier)
+                ?? User.FindFirstValue(JwtRegisteredClaimNames.Sub);
+
+            if (!Guid.TryParse(userIdRaw, out var userId))
+            {
+                return Unauthorized(new { message = "Token missing or invalid user id claim." });
+            }
 
             await _auth.LogoutAllAsync(userId, ct);
 
