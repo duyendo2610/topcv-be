@@ -84,7 +84,7 @@ namespace topCv.Application.Mappings
                 Currency = job.Currency,
 
                 CityId = job.CityId,
-                CityName = job.City?.Name,
+                CityName = job.Province?.Name,
                 Address = job.Address,
 
                 ExpMin = job.ExpMin,

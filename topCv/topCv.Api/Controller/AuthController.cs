@@ -22,7 +22,7 @@ namespace topCv.Api.Controller
         public async Task<IActionResult> Register([FromBody] UserRegisterRequest req, CancellationToken ct)
         {
             var res = await _auth.RegisterAsync(req, ct);
-            return Ok(res);
+            return NoContent();
         }
 
         [HttpPost("login")]

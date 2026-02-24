@@ -42,7 +42,7 @@ namespace topCv.Domain.Entities.Obj
 
         public Company Company { get; set; } = default!;
         public User CreatedByUser { get; set; } = default!;
-        public City? City { get; set; }
+        public Province? Province { get; set; }
 
         public ICollection<JobSkill> JobSkills { get; set; } = new List<JobSkill>();
         public ICollection<JobCategory> JobCategories { get; set; } = new List<JobCategory>();

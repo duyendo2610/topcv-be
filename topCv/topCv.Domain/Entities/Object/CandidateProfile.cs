@@ -27,6 +27,6 @@ namespace topCv.Domain.Entities.Obj
         public DateTime? UpdatedAt { get; set; }
 
         public User User { get; set; } = default!;
-        public City? City { get; set; }
+        public Province? Province { get; set; }
     }
 }

@@ -12,11 +12,11 @@ namespace topCv.Domain.Entities.Auth
     {
         public Guid Id { get; set; }
 
-        public string Email { get; set; }       
+        public string Email { get; set; } 
         public string PasswordHash { get; set; }
         public string FullName { get; set; } = default!;
         public string? Phone { get; set; }
-        public string Role { get; set; }           
+        public string Role { get; set; } = null!;
 
         public bool IsActive { get; set; }        
         public DateTime CreatedAtUtc { get; set; }

@@ -6,6 +6,7 @@ using System.Text;
 using topCv.Application.Common;
 using topCv.Application.Interfaces.Auth;
 using topCv.Application.Interfaces.Obj;
+using topCv.Application.Interfaces.Object;
 using topCv.Application.Services.Auth;
 using topCv.Application.Services.Obj;
 using topCv.Domain.Common;
@@ -13,6 +14,7 @@ using topCv.Domain.Entities.Auth;
 using topCv.Infrastructure.Persistence;
 using topCv.Infrastructure.Repositories;
 using topCv.Infrastructure.Security;
+using topCv.Application.Services.Object;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -28,7 +30,7 @@ builder.Services.AddScoped<IAppDbContext, AppDbContext>();
 builder.Services.AddScoped<ITokenService, TokenService>();
 builder.Services.AddScoped<IAuthService, AuthService>();
 builder.Services.AddScoped<IHashService, Sha256HashService>();
-builder.Services.AddScoped<ICityService, CityService>();
+builder.Services.AddScoped<IProvinceService, ProvinceService>();
 builder.Services.AddScoped<ICategoryService, CategoryService>();
 builder.Services.AddScoped<ISkillService, SkillService>();
 builder.Services.AddScoped<ICompanyService, CompanyService>();
@@ -41,6 +43,11 @@ builder.Services.AddScoped<IFollowCompanyService, FollowCompanyService>();
 builder.Services.AddScoped<IEmployerDashboardService, EmployerDashboardService>();
 builder.Services.AddScoped<INotificationService, NotificationService>();
 builder.Services.AddScoped<IJobMatchService, JobMatchService>();
+builder.Services.AddScoped<IWardService, WardService>();
+
+//
+builder.Services.AddHttpClient<ProvinceWardSeedService>();
+builder.Services.AddScoped<ProvinceWardSeedService>();
 
 builder.Services.AddAuthorization(options =>
 {
@@ -112,6 +119,12 @@ builder.Services.AddSwaggerGen(c =>
 });
 
 var app = builder.Build();
+//
+using (var scope = app.Services.CreateScope())
+{
+    var seed = scope.ServiceProvider.GetRequiredService<ProvinceWardSeedService>();
+    await seed.SeedAsync();
+}
 
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())
