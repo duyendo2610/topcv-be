@@ -1,5 +1,6 @@
 ﻿using System.Text;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.Data.SqlClient;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
@@ -97,7 +98,7 @@ builder.Services.AddSwaggerGen(c =>
         Scheme = "bearer",
         BearerFormat = "JWT",
         In = ParameterLocation.Header,
-        Description = "Nhập token dạng: Bearer {your_token}"
+        Description = "Input token: Bearer {your_token}"
     });
 
     c.AddSecurityRequirement(new OpenApiSecurityRequirement
@@ -129,11 +130,44 @@ builder.Services.AddCors(options =>
 });
 
 var app = builder.Build();
-//
+
 using (var scope = app.Services.CreateScope())
 {
-    var seed = scope.ServiceProvider.GetRequiredService<ProvinceWardSeedService>();
-    await seed.SeedAsync();
+    var services = scope.ServiceProvider;
+    var logger = services.GetRequiredService<ILogger<Program>>();
+
+    try
+    {
+        var db = services.GetRequiredService<AppDbContext>();
+
+        // Retry connect SQL Server
+        var retries = 5;
+        while (retries > 0)
+        {
+            try
+            {
+                await db.Database.MigrateAsync();
+                break;
+            }
+            catch (SqlException)
+            {
+                retries--;
+                logger.LogWarning("SQL Server not ready. Retrying...");
+                await Task.Delay(5000);
+            }
+        }
+
+        // Seed after migrate
+        var seed = services.GetRequiredService<ProvinceWardSeedService>();
+        await seed.SeedAsync();
+
+        logger.LogInformation("Database migrated & seeded successfully.");
+    }
+    catch (Exception ex)
+    {
+        logger.LogError(ex, "An error occurred during migration.");
+        throw;
+    }
 }
 
 // Configure the HTTP request pipeline.
