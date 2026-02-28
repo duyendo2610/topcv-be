@@ -17,7 +17,6 @@ services:
     healthcheck:
       test: /opt/mssql-tools18/bin/sqlcmd -S localhost -U sa -P "$$SA_PASSWORD" -Q "SELECT 1" -C -b -o /dev/null
       interval: 10s
-
       timeout: 3s
       retries: 10
       start_period: 30s
@@ -30,7 +29,7 @@ services:
     container_name: topcv-api
     environment:
       - ASPNETCORE_ENVIRONMENT=${ASPNETCORE_ENVIRONMENT:-Development}
-      - ASPNETCORE_URLS=http://+:8080
+      - ASPNETCORE_URLS=http://+:5000
       - ConnectionStrings__DefaultConnection=Server=sqlserver;Database=topCv;User Id=sa;Password=${SA_PASSWORD:-TopCv@2024!Strong};TrustServerCertificate=True;
       - Jwt__Issuer=${JWT_ISSUER:-TopCV}
       - Jwt__Audience=${JWT_AUDIENCE:-TopCV.Client}
@@ -39,7 +38,7 @@ services:
       - Jwt__RefreshTokenDays=${JWT_REFRESH_TOKEN_DAYS:-7}
       - FileStorage__UploadPath=/app/uploads
     ports:
-      - "5000:8080"
+      - "5000:5000"
     volumes:
       - uploads:/app/uploads
     networks:
@@ -48,8 +47,8 @@ services:
       sqlserver:
         condition: service_healthy
     healthcheck:
-      test: curl -f http://localhost:8080/swagger/index.html || exit 1
-      interval: 30s
+      test: curl -f http://localhost:5000/swagger/index.html || exit 1
+      interval: 30s 
       timeout: 3s
       retries: 3
       start_period: 60s
