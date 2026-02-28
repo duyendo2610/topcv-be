@@ -132,17 +132,13 @@ namespace topCv.Application.Services.Commons
             return job.ToResponse();
         }
 
-        public async Task<List<JobResponse>> SearchAsync(JobQueryRequest req, CancellationToken ct)
+        public async Task<PagedResult<JobResponse>> SearchAsync(JobQueryRequest req, CancellationToken ct)
         {
             var page = req.Page < 1 ? 1 : req.Page;
             var pageSize = req.PageSize <= 0 ? 20 : req.PageSize;
 
-            var query = _db.Jobs
+            var baseQuery = _db.Jobs
                 .AsNoTracking()
-                .Include(x => x.Company)
-                .Include(x => x.Province)
-                .Include(x => x.JobSkills)
-                .Include(x => x.JobCategories)
                 .AsQueryable();
 
             // only Published for public list? (tuỳ bạn)
@@ -151,37 +147,49 @@ namespace topCv.Application.Services.Commons
             if (!string.IsNullOrWhiteSpace(req.Keyword))
             {
                 var kw = req.Keyword.Trim();
-                query = query.Where(x => x.Title.Contains(kw) || x.Company.Name.Contains(kw));
+                baseQuery = baseQuery.Where(x => x.Title.Contains(kw) || x.Company.Name.Contains(kw));
             }
 
             if (req.CityId is int cityId)
-                query = query.Where(x => x.CityId == cityId);
+                baseQuery = baseQuery.Where(x => x.CityId == cityId);
 
             if (req.Level is JobLevel level)
-                query = query.Where(x => x.Level == level);
+                baseQuery = baseQuery.Where(x => x.Level == level);
 
             if (req.JobType is JobType jobType)
-                query = query.Where(x => x.JobType == jobType);
+                baseQuery = baseQuery.Where(x => x.JobType == jobType);
 
             if (req.SkillIds is { Count: > 0 })
             {
                 var skillSet = req.SkillIds.Distinct().ToList();
-                query = query.Where(j => j.JobSkills.Any(s => skillSet.Contains(s.SkillId)));
+                baseQuery = baseQuery.Where(j => j.JobSkills.Any(s => skillSet.Contains(s.SkillId)));
             }
 
             if (req.CategoryIds is { Count: > 0 })
             {
                 var catSet = req.CategoryIds.Distinct().ToList();
-                query = query.Where(j => j.JobCategories.Any(c => catSet.Contains(c.CategoryId)));
+                baseQuery = baseQuery.Where(j => j.JobCategories.Any(c => catSet.Contains(c.CategoryId)));
             }
 
-            var items = await query
+            var totalItems = await baseQuery.LongCountAsync(ct);
+
+            var items = await baseQuery
+                .Include(x => x.Company)
+                .Include(x => x.Province)
+                .Include(x => x.JobSkills)
+                .Include(x => x.JobCategories)
                 .OrderByDescending(x => x.CreatedAt) // nếu không có CreatedAt thì đổi sang Id
                 .Skip((page - 1) * pageSize)
                 .Take(pageSize)
                 .ToListAsync(ct);
 
-            return items.Select(x => x.ToResponse()).ToList();
+            return new PagedResult<JobResponse>
+            {
+                Items = items.Select(x => x.ToResponse()).ToList(),
+                Page = page,
+                PageSize = pageSize,
+                TotalItems = totalItems
+            };
         }
 
         public async Task PublishAsync(Guid id, Guid userId, CancellationToken ct)

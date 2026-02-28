@@ -37,13 +37,13 @@ namespace topCv.Api.Controller
             => Ok(await _service.GetByIdAsync(id, ct));
 
         [HttpGet]
-        public async Task<IActionResult> GetAll(CancellationToken ct)
-            => Ok(await _service.GetAllAsync(ct));
+        public async Task<IActionResult> GetAll([FromQuery] CompanyQueryRequest req, CancellationToken ct)
+            => Ok(await _service.GetAllAsync(req, ct));
 
         [Authorize]
         [HttpGet("me")]
-        public async Task<IActionResult> GetMine(CancellationToken ct)
-            => Ok(await _service.GetMyCompaniesAsync(UserId, ct));
+        public async Task<IActionResult> GetMine([FromQuery] CompanyQueryRequest req, CancellationToken ct)
+            => Ok(await _service.GetMyCompaniesAsync(UserId, req, ct));
 
         [Authorize]
         [HttpDelete("{id:guid}")]

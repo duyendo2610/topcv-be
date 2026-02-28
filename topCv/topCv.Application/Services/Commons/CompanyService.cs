@@ -84,27 +84,59 @@ namespace topCv.Application.Services.Commons
             return company.ToResponse();
         }
 
-        public async Task<List<CompanyResponse>> GetAllAsync(CancellationToken ct)
+        public async Task<PagedResult<CompanyResponse>> GetAllAsync(CompanyQueryRequest req, CancellationToken ct)
         {
-            var companies = await _db.Companies
-                .Include(x => x.Province)
+            var page = req.Page < 1 ? 1 : req.Page;
+            var pageSize = req.PageSize <= 0 ? 20 : req.PageSize;
+
+            var baseQuery = _db.Companies
                 .AsNoTracking()
+                .AsQueryable();
+
+            var totalItems = await baseQuery.LongCountAsync(ct);
+
+            var companies = await baseQuery
+                .Include(x => x.Province)
                 .OrderByDescending(x => x.CreatedAt) // nếu entity có CreatedAt
+                .Skip((page - 1) * pageSize)
+                .Take(pageSize)
                 .ToListAsync(ct);
 
-            return companies.Select(x => x.ToResponse()).ToList();
+            return new PagedResult<CompanyResponse>
+            {
+                Items = companies.Select(x => x.ToResponse()).ToList(),
+                Page = page,
+                PageSize = pageSize,
+                TotalItems = totalItems
+            };
         }
 
-        public async Task<List<CompanyResponse>> GetMyCompaniesAsync(Guid userId, CancellationToken ct)
+        public async Task<PagedResult<CompanyResponse>> GetMyCompaniesAsync(Guid userId, CompanyQueryRequest req, CancellationToken ct)
         {
-            var companies = await _db.Companies
-                .Include(x => x.Province)
+            var page = req.Page < 1 ? 1 : req.Page;
+            var pageSize = req.PageSize <= 0 ? 20 : req.PageSize;
+
+            var baseQuery = _db.Companies
                 .AsNoTracking()
                 .Where(x => x.OwnerUserId == userId)
+                .AsQueryable();
+
+            var totalItems = await baseQuery.LongCountAsync(ct);
+
+            var companies = await baseQuery
+                .Include(x => x.Province)
                 .OrderByDescending(x => x.CreatedAt) // nếu có
+                .Skip((page - 1) * pageSize)
+                .Take(pageSize)
                 .ToListAsync(ct);
 
-            return companies.Select(x => x.ToResponse()).ToList();
+            return new PagedResult<CompanyResponse>
+            {
+                Items = companies.Select(x => x.ToResponse()).ToList(),
+                Page = page,
+                PageSize = pageSize,
+                TotalItems = totalItems
+            };
         }
 
         public async Task DeleteAsync(Guid id, Guid userId, CancellationToken ct)
