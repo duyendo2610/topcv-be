@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using topCv.Infrastructure.Persistence;
 
@@ -11,9 +12,11 @@ using topCv.Infrastructure.Persistence;
 namespace topCv.Infrastructure.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    partial class AppDbContextModelSnapshot : ModelSnapshot
+    [Migration("20260303030922_AddResumeTemplateTheme")]
+    partial class AddResumeTemplateTheme
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -500,21 +503,15 @@ namespace topCv.Infrastructure.Migrations
                     b.Property<string>("TemplateKey")
                         .IsRequired()
                         .ValueGeneratedOnAdd()
-                        .HasMaxLength(40)
-                        .HasColumnType("nvarchar(40)")
-                        .HasDefaultValue("simple");
-
-                    b.Property<Guid?>("TemplateVariantId")
-                        .HasColumnType("uniqueidentifier");
+                        .HasMaxLength(80)
+                        .HasColumnType("nvarchar(80)")
+                        .HasDefaultValue("classic");
 
                     b.Property<string>("ThemeJson")
                         .IsRequired()
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("nvarchar(max)")
+                        .HasColumnType("text")
                         .HasDefaultValue("{}");
-
-                    b.Property<Guid?>("ThemePresetId")
-                        .HasColumnType("uniqueidentifier");
 
                     b.Property<DateTime?>("UpdatedAt")
                         .HasColumnType("datetime2");
@@ -528,10 +525,6 @@ namespace topCv.Infrastructure.Migrations
                         .HasDefaultValue(0);
 
                     b.HasKey("Id");
-
-                    b.HasIndex("TemplateVariantId");
-
-                    b.HasIndex("ThemePresetId");
 
                     b.HasIndex("UserId");
 
@@ -583,7 +576,7 @@ namespace topCv.Infrastructure.Migrations
 
                     b.Property<string>("ContentJson")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                        .HasColumnType("text");
 
                     b.Property<DateTime>("CreatedAt")
                         .HasColumnType("datetime2");
@@ -608,126 +601,6 @@ namespace topCv.Infrastructure.Migrations
                     b.HasIndex("ResumeId");
 
                     b.ToTable("ResumeSections", (string)null);
-                });
-
-            modelBuilder.Entity("topCv.Domain.Entities.Commons.ResumeTemplateVariant", b =>
-                {
-                    b.Property<Guid>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("uniqueidentifier");
-
-                    b.Property<DateTime>("CreatedAt")
-                        .HasColumnType("datetime2");
-
-                    b.Property<string>("Description")
-                        .HasMaxLength(400)
-                        .HasColumnType("nvarchar(400)");
-
-                    b.Property<bool>("IsActive")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("bit")
-                        .HasDefaultValue(true);
-
-                    b.Property<string>("LayoutKey")
-                        .IsRequired()
-                        .HasMaxLength(80)
-                        .HasColumnType("nvarchar(80)");
-
-                    b.Property<string>("Name")
-                        .IsRequired()
-                        .HasMaxLength(120)
-                        .HasColumnType("nvarchar(120)");
-
-                    b.Property<int>("SortOrder")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .HasDefaultValue(0);
-
-                    b.Property<string>("TemplateKey")
-                        .IsRequired()
-                        .HasMaxLength(40)
-                        .HasColumnType("nvarchar(40)");
-
-                    b.Property<string>("VariantKey")
-                        .IsRequired()
-                        .HasMaxLength(80)
-                        .HasColumnType("nvarchar(80)");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("TemplateKey");
-
-                    b.HasIndex("VariantKey")
-                        .IsUnique();
-
-                    b.ToTable("ResumeTemplateVariants", (string)null);
-                });
-
-            modelBuilder.Entity("topCv.Domain.Entities.Commons.ResumeTemplateVariantTheme", b =>
-                {
-                    b.Property<Guid>("VariantId")
-                        .HasColumnType("uniqueidentifier");
-
-                    b.Property<Guid>("ThemePresetId")
-                        .HasColumnType("uniqueidentifier");
-
-                    b.Property<int>("SortOrder")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .HasDefaultValue(0);
-
-                    b.HasKey("VariantId", "ThemePresetId");
-
-                    b.HasIndex("ThemePresetId");
-
-                    b.ToTable("ResumeTemplateVariantThemes", (string)null);
-                });
-
-            modelBuilder.Entity("topCv.Domain.Entities.Commons.ResumeThemePreset", b =>
-                {
-                    b.Property<Guid>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("uniqueidentifier");
-
-                    b.Property<DateTime>("CreatedAt")
-                        .HasColumnType("datetime2");
-
-                    b.Property<bool>("IsActive")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("bit")
-                        .HasDefaultValue(true);
-
-                    b.Property<string>("Name")
-                        .IsRequired()
-                        .HasMaxLength(120)
-                        .HasColumnType("nvarchar(120)");
-
-                    b.Property<int>("SortOrder")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .HasDefaultValue(0);
-
-                    b.Property<string>("TemplateKey")
-                        .HasMaxLength(40)
-                        .HasColumnType("nvarchar(40)");
-
-                    b.Property<string>("ThemeJson")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("ThemeKey")
-                        .IsRequired()
-                        .HasMaxLength(80)
-                        .HasColumnType("nvarchar(80)");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("TemplateKey");
-
-                    b.HasIndex("ThemeKey")
-                        .IsUnique();
-
-                    b.ToTable("ResumeThemePresets", (string)null);
                 });
 
             modelBuilder.Entity("topCv.Domain.Entities.Commons.SavedJob", b =>
@@ -992,25 +865,11 @@ namespace topCv.Infrastructure.Migrations
 
             modelBuilder.Entity("topCv.Domain.Entities.Commons.Resume", b =>
                 {
-                    b.HasOne("topCv.Domain.Entities.Commons.ResumeTemplateVariant", "TemplateVariant")
-                        .WithMany("Resumes")
-                        .HasForeignKey("TemplateVariantId")
-                        .OnDelete(DeleteBehavior.SetNull);
-
-                    b.HasOne("topCv.Domain.Entities.Commons.ResumeThemePreset", "ThemePreset")
-                        .WithMany("Resumes")
-                        .HasForeignKey("ThemePresetId")
-                        .OnDelete(DeleteBehavior.SetNull);
-
                     b.HasOne("topCv.Domain.Entities.Auth.User", "User")
                         .WithMany("Resumes")
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
-
-                    b.Navigation("TemplateVariant");
-
-                    b.Navigation("ThemePreset");
 
                     b.Navigation("User");
                 });
@@ -1035,25 +894,6 @@ namespace topCv.Infrastructure.Migrations
                         .IsRequired();
 
                     b.Navigation("Resume");
-                });
-
-            modelBuilder.Entity("topCv.Domain.Entities.Commons.ResumeTemplateVariantTheme", b =>
-                {
-                    b.HasOne("topCv.Domain.Entities.Commons.ResumeThemePreset", "ThemePreset")
-                        .WithMany("VariantThemes")
-                        .HasForeignKey("ThemePresetId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("topCv.Domain.Entities.Commons.ResumeTemplateVariant", "Variant")
-                        .WithMany("VariantThemes")
-                        .HasForeignKey("VariantId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("ThemePreset");
-
-                    b.Navigation("Variant");
                 });
 
             modelBuilder.Entity("topCv.Domain.Entities.Commons.SavedJob", b =>
@@ -1157,20 +997,6 @@ namespace topCv.Infrastructure.Migrations
                     b.Navigation("JobApplications");
                 });
 
-            modelBuilder.Entity("topCv.Domain.Entities.Commons.ResumeTemplateVariant", b =>
-                {
-                    b.Navigation("Resumes");
-
-                    b.Navigation("VariantThemes");
-                });
-
-            modelBuilder.Entity("topCv.Domain.Entities.Commons.ResumeThemePreset", b =>
-                {
-                    b.Navigation("Resumes");
-
-                    b.Navigation("VariantThemes");
-                });
-
             modelBuilder.Entity("topCv.Domain.Entities.Commons.Skill", b =>
                 {
                     b.Navigation("JobSkills");
@@ -1179,5 +1005,3 @@ namespace topCv.Infrastructure.Migrations
         }
     }
 }
-
-

@@ -28,7 +28,7 @@ namespace topCv.Application.Services.Commons
                 .FirstOrDefaultAsync(x => x.UserId == userId, ct);
 
             if (profile is null)
-                throw new InvalidOperationException("Candidate profile not found.");
+                throw new InvalidOperationException("Không tìm thấy hồ sơ ứng viên.");
 
             // base query: Published + chưa quá deadline
             // NOTE: Status Published = 1 (bạn đang dùng int enum)
@@ -131,8 +131,8 @@ namespace topCv.Application.Services.Commons
                 {
                     UserId = userId,
                     Type = NotificationType.JobMatched,
-                    Title = "Job matched",
-                    Body = $"{marker} You may like: '{m.Title}' at '{m.CompanyName}'."
+                    Title = "Việc làm phù hợp",
+                    Body = $"{marker} Bạn có thể quan tâm: '{m.Title}' tại '{m.CompanyName}'."
                 }, ct);
 
                 created++;

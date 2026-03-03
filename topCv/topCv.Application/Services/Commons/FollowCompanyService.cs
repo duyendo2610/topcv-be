@@ -24,7 +24,7 @@ namespace topCv.Application.Services.Commons
                 .AnyAsync(x => x.Id == companyId, ct);
 
             if (!companyExists)
-                throw new KeyNotFoundException("Company not found.");
+                throw new KeyNotFoundException("Không tìm thấy công ty.");
 
             // Prevent duplicate (UserId + CompanyId)
             var existed = await _db.FollowCompanies

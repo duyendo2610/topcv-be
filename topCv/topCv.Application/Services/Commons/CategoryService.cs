@@ -29,7 +29,7 @@ namespace topCv.Application.Services.Commons
         {
             var name = req.Name.Trim();
             if (string.IsNullOrWhiteSpace(name))
-                throw new ArgumentException("Name is required.");
+                throw new ArgumentException("Tên không được để trống.");
 
 
             if (req.ParentId is int parentId)
@@ -38,7 +38,7 @@ namespace topCv.Application.Services.Commons
                     .AsNoTracking()
                     .AnyAsync(x => x.Id == parentId, ct);
                 if (!parentExists)
-                    throw new InvalidOperationException("Parent category not found.");
+                    throw new InvalidOperationException("Không tìm thấy danh mục cha.");
             }
 
             var exists = await _db.Categories
@@ -46,7 +46,7 @@ namespace topCv.Application.Services.Commons
                 .AnyAsync(x => x.Name == name && x.ParentId == req.ParentId, ct);
 
             if (exists)
-                throw new InvalidOperationException("Category already exists in this parent.");
+                throw new InvalidOperationException("Danh mục đã tồn tại trong nhóm cha này.");
 
             var entity = new CreateCategoryRequest
             {
@@ -66,15 +66,15 @@ namespace topCv.Application.Services.Commons
                 .FirstOrDefaultAsync(x => x.Id == id, ct);
 
             if (entity is null)
-                throw new KeyNotFoundException("Category not found.");
+                throw new KeyNotFoundException("Không tìm thấy danh mục.");
 
             var name = req.Name.Trim();
             if (string.IsNullOrWhiteSpace(name))
-                throw new ArgumentException("Name is required.");
+                throw new ArgumentException("Tên không được để trống.");
 
             // parent validation
             if (req.ParentId == id)
-                throw new InvalidOperationException("ParentId cannot be itself.");
+                throw new InvalidOperationException("Danh mục cha không thể là chính nó.");
 
             if (req.ParentId is int parentId)
             {
@@ -83,7 +83,7 @@ namespace topCv.Application.Services.Commons
                     .AnyAsync(x => x.Id == parentId, ct);
 
                 if (!parentExists)
-                    throw new InvalidOperationException("Parent category not found.");
+                    throw new InvalidOperationException("Không tìm thấy danh mục cha.");
             }
 
             var exists = await _db.Categories
@@ -91,7 +91,7 @@ namespace topCv.Application.Services.Commons
                 .AnyAsync(x => x.Id != id && x.Name == name && x.ParentId == req.ParentId, ct);
 
             if (exists)
-                throw new InvalidOperationException("Category name already exists in this parent.");
+                throw new InvalidOperationException("Tên danh mục đã tồn tại trong nhóm cha này.");
 
             new UpdateCategoryRequest
             {
@@ -110,7 +110,7 @@ namespace topCv.Application.Services.Commons
                 .FirstOrDefaultAsync(x => x.Id == id, ct);
 
             if (entity is null)
-                throw new KeyNotFoundException("Category not found.");
+                throw new KeyNotFoundException("Không tìm thấy danh mục.");
 
             // chặn xoá nếu có con (tùy nghiệp vụ)
             var hasChildren = await _db.Categories
@@ -118,7 +118,7 @@ namespace topCv.Application.Services.Commons
                 .AnyAsync(x => x.ParentId == id, ct);
 
             if (hasChildren)
-                throw new InvalidOperationException("Cannot delete category that has children.");
+                throw new InvalidOperationException("Không thể xóa danh mục đang có danh mục con.");
 
             _db.Categories.Remove(entity);
             await _db.SaveChangesAsync(ct);

@@ -23,14 +23,14 @@ namespace topCv.Application.Services.Commons
             var company = await _db.Companies
                               .AsNoTracking()
                               .FirstOrDefaultAsync(x => x.Id == req.CompanyId, ct)
-                          ?? throw new KeyNotFoundException("Company not found.");
+                          ?? throw new KeyNotFoundException("Không tìm thấy công ty.");
 
             if (company.OwnerUserId != userId)
-                throw new UnauthorizedAccessException("Not company owner.");
+                throw new UnauthorizedAccessException("Bạn không phải chủ sở hữu công ty.");
 
             var title = req.Title.Trim();
             if (string.IsNullOrWhiteSpace(title))
-                throw new ArgumentException("Title is required.");
+                throw new ArgumentException("Tiêu đề không được để trống.");
 
             // validate master ids
             await ValidateSkillsAndCategories(req.SkillIds, req.CategoryIds, ct);
@@ -62,7 +62,7 @@ namespace topCv.Application.Services.Commons
             var job = await _db.Jobs
                           .Include(x => x.Company)
                           .FirstOrDefaultAsync(x => x.Id == id, ct)
-                      ?? throw new KeyNotFoundException("Job not found.");
+                      ?? throw new KeyNotFoundException("Không tìm thấy tin tuyển dụng.");
 
             // owner check via company owner
             var company = await _db.Companies
@@ -70,11 +70,11 @@ namespace topCv.Application.Services.Commons
                 .FirstAsync(x => x.Id == job.CompanyId, ct);
 
             if (company.OwnerUserId != userId)
-                throw new UnauthorizedAccessException("Not company owner.");
+                throw new UnauthorizedAccessException("Bạn không phải chủ sở hữu công ty.");
 
             var title = req.Title.Trim();
             if (string.IsNullOrWhiteSpace(title))
-                throw new ArgumentException("Title is required.");
+                throw new ArgumentException("Tiêu đề không được để trống.");
 
             await ValidateSkillsAndCategories(req.SkillIds, req.CategoryIds, ct);
 
@@ -105,13 +105,13 @@ namespace topCv.Application.Services.Commons
         public async Task DeleteAsync(Guid id, Guid userId, CancellationToken ct)
         {
             var job = await _db.Jobs.FirstOrDefaultAsync(x => x.Id == id, ct)
-                      ?? throw new KeyNotFoundException("Job not found.");
+                      ?? throw new KeyNotFoundException("Không tìm thấy tin tuyển dụng.");
 
             var company = await _db.Companies.AsNoTracking()
                 .FirstAsync(x => x.Id == job.CompanyId, ct);
 
             if (company.OwnerUserId != userId)
-                throw new UnauthorizedAccessException("Not company owner.");
+                throw new UnauthorizedAccessException("Bạn không phải chủ sở hữu công ty.");
 
             // remove joins first (safe)
             var js = await _db.JobSkills.Where(x => x.JobId == id).ToListAsync(ct);
@@ -127,7 +127,7 @@ namespace topCv.Application.Services.Commons
         public async Task<JobResponse> GetByIdAsync(Guid id, CancellationToken ct)
         {
             var job = await LoadJobForResponse(id, ct)
-                      ?? throw new KeyNotFoundException("Job not found.");
+                      ?? throw new KeyNotFoundException("Không tìm thấy tin tuyển dụng.");
 
             return job.ToResponse();
         }
@@ -195,13 +195,13 @@ namespace topCv.Application.Services.Commons
         public async Task PublishAsync(Guid id, Guid userId, CancellationToken ct)
         {
             var job = await _db.Jobs.FirstOrDefaultAsync(x => x.Id == id, ct)
-                      ?? throw new KeyNotFoundException("Job not found.");
+                      ?? throw new KeyNotFoundException("Không tìm thấy tin tuyển dụng.");
 
             var company = await _db.Companies.AsNoTracking()
                 .FirstAsync(x => x.Id == job.CompanyId, ct);
 
             if (company.OwnerUserId != userId)
-                throw new UnauthorizedAccessException("Not company owner.");
+                throw new UnauthorizedAccessException("Bạn không phải chủ sở hữu công ty.");
 
             job.Status = JobStatus.Published; // Published
             await _db.SaveChangesAsync(ct);
@@ -210,13 +210,13 @@ namespace topCv.Application.Services.Commons
         public async Task CloseAsync(Guid id, Guid userId, CancellationToken ct)
         {
             var job = await _db.Jobs.FirstOrDefaultAsync(x => x.Id == id, ct)
-                      ?? throw new KeyNotFoundException("Job not found.");
+                      ?? throw new KeyNotFoundException("Không tìm thấy tin tuyển dụng.");
 
             var company = await _db.Companies.AsNoTracking()
                 .FirstAsync(x => x.Id == job.CompanyId, ct);
 
             if (company.OwnerUserId != userId)
-                throw new UnauthorizedAccessException("Not company owner.");
+                throw new UnauthorizedAccessException("Bạn không phải chủ sở hữu công ty.");
 
             job.Status = JobStatus.Closed; // Closed
             await _db.SaveChangesAsync(ct);
@@ -231,7 +231,7 @@ namespace topCv.Application.Services.Commons
                     .CountAsync(x => distinct.Contains(x.Id), ct);
 
                 if (found != distinct.Count)
-                    throw new InvalidOperationException("Some SkillIds are invalid.");
+                    throw new InvalidOperationException("Một số SkillId không hợp lệ.");
             }
 
             if (categoryIds.Count > 0)
@@ -241,7 +241,7 @@ namespace topCv.Application.Services.Commons
                     .CountAsync(x => distinct.Contains(x.Id), ct);
 
                 if (found != distinct.Count)
-                    throw new InvalidOperationException("Some CategoryIds are invalid.");
+                    throw new InvalidOperationException("Một số CategoryId không hợp lệ.");
             }
         }
 

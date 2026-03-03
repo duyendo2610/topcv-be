@@ -27,16 +27,16 @@ namespace topCv.Application.Services.Commons
             long fileSize,
             CancellationToken ct)
         {
-            if (fileSize <= 0) throw new ArgumentException("File is empty.");
+            if (fileSize <= 0) throw new ArgumentException("Tệp rỗng.");
 
             // 1) Check resume exists + belongs to current user
             var resume = await _db.Resumes
                              .AsNoTracking()
                              .FirstOrDefaultAsync(x => x.Id == resumeId, ct)
-                         ?? throw new KeyNotFoundException("Resume not found.");
+                         ?? throw new KeyNotFoundException("Không tìm thấy CV.");
 
             if (resume.UserId != userId)
-                throw new UnauthorizedAccessException("Not your resume.");
+                throw new UnauthorizedAccessException("Bạn không sở hữu CV này.");
 
             // 2) Validate mime type (basic)
             var allowed = new HashSet<string>(StringComparer.OrdinalIgnoreCase)
@@ -47,7 +47,7 @@ namespace topCv.Application.Services.Commons
             };
 
             if (!allowed.Contains(contentType))
-                throw new InvalidOperationException("Only PDF/DOC/DOCX allowed.");
+                throw new InvalidOperationException("Chỉ hỗ trợ PDF/DOC/DOCX.");
 
             // 3) Save physical file
             var (fileUrl, storedName) = await _storage.SaveAsync(content, fileName, contentType, ct);
@@ -76,10 +76,10 @@ namespace topCv.Application.Services.Commons
             var resume = await _db.Resumes
                              .AsNoTracking()
                              .FirstOrDefaultAsync(x => x.Id == resumeId, ct)
-                         ?? throw new KeyNotFoundException("Resume not found.");
+                         ?? throw new KeyNotFoundException("Không tìm thấy CV.");
 
             if (resume.UserId != userId)
-                throw new UnauthorizedAccessException("Not your resume.");
+                throw new UnauthorizedAccessException("Bạn không sở hữu CV này.");
 
             var items = await _db.ResumeFiles
                 .AsNoTracking()
@@ -96,15 +96,15 @@ namespace topCv.Application.Services.Commons
             var entity = await _db.ResumeFiles
                              .AsNoTracking()
                              .FirstOrDefaultAsync(x => x.Id == id, ct)
-                         ?? throw new KeyNotFoundException("Resume file not found.");
+                         ?? throw new KeyNotFoundException("Không tìm thấy tệp CV.");
 
             var resume = await _db.Resumes
                              .AsNoTracking()
                              .FirstOrDefaultAsync(x => x.Id == entity.ResumeId, ct)
-                         ?? throw new KeyNotFoundException("Resume not found.");
+                         ?? throw new KeyNotFoundException("Không tìm thấy CV.");
 
             if (resume.UserId != userId)
-                throw new UnauthorizedAccessException("Not your resume file.");
+                throw new UnauthorizedAccessException("Bạn không sở hữu tệp CV này.");
 
             return entity.ToResponse();
         }
@@ -113,15 +113,15 @@ namespace topCv.Application.Services.Commons
         {
             var entity = await _db.ResumeFiles
                              .FirstOrDefaultAsync(x => x.Id == id, ct)
-                         ?? throw new KeyNotFoundException("Resume file not found.");
+                         ?? throw new KeyNotFoundException("Không tìm thấy tệp CV.");
 
             var resume = await _db.Resumes
                              .AsNoTracking()
                              .FirstOrDefaultAsync(x => x.Id == entity.ResumeId, ct)
-                         ?? throw new KeyNotFoundException("Resume not found.");
+                         ?? throw new KeyNotFoundException("Không tìm thấy CV.");
 
             if (resume.UserId != userId)
-                throw new UnauthorizedAccessException("Not your resume file.");
+                throw new UnauthorizedAccessException("Bạn không sở hữu tệp CV này.");
 
             await _storage.DeleteAsync(entity.FileUrl, ct);
 

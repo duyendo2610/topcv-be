@@ -18,7 +18,7 @@ namespace topCv.Application.Services.Commons
         public async Task<NotificationResponse> CreateAsync(CreateNotificationRequest req, CancellationToken ct)
         {
             if (string.IsNullOrWhiteSpace(req.Title))
-                throw new ArgumentException("Title is required.");
+                throw new ArgumentException("Tiêu đề không được để trống.");
 
             var entity = req.ToEntity();
 
@@ -43,7 +43,7 @@ namespace topCv.Application.Services.Commons
         {
             var entity = await _db.Notifications
                              .FirstOrDefaultAsync(x => x.Id == notificationId && x.UserId == userId, ct)
-                         ?? throw new KeyNotFoundException("Notification not found.");
+                         ?? throw new KeyNotFoundException("Không tìm thấy thông báo.");
 
             if (!entity.IsRead)
             {

@@ -24,7 +24,7 @@ namespace topCv.Application.Services.Commons
                 .AnyAsync(x => x.Id == jobId, ct);
 
             if (!jobExists)
-                throw new KeyNotFoundException("Job not found.");
+                throw new KeyNotFoundException("Không tìm thấy tin tuyển dụng.");
 
             // 2) Không lưu trùng (UserId + JobId)
             var existed = await _db.SavedJobs
