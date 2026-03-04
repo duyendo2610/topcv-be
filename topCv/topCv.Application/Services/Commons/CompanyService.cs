@@ -19,11 +19,11 @@ namespace topCv.Application.Services.Commons
         {
             var name = req.Name.Trim();
             if (string.IsNullOrWhiteSpace(name))
-                throw new ArgumentException("Company name is required.");
+                throw new ArgumentException("Tên công ty không được để trống.");
 
             var duplicated = await _db.Companies.AsNoTracking()
                 .AnyAsync(x => x.OwnerUserId == userId && x.Name == name, ct);
-            if (duplicated) throw new InvalidOperationException("You already created a company with the same name.");
+            if (duplicated) throw new InvalidOperationException("Bạn đã tạo công ty với tên này.");
 
             var company = req.ToCompany(userId);
 
@@ -47,18 +47,18 @@ namespace topCv.Application.Services.Commons
             var company = await _db.Companies
                               .Include(x => x.Province)
                               .FirstOrDefaultAsync(x => x.Id == id, ct)
-                          ?? throw new KeyNotFoundException("Company not found.");
+                          ?? throw new KeyNotFoundException("Không tìm thấy công ty.");
 
             if (company.OwnerUserId != userId)
-                throw new UnauthorizedAccessException("Not company owner.");
+                throw new UnauthorizedAccessException("Bạn không phải chủ sở hữu công ty.");
 
             var name = req.Name.Trim();
             if (string.IsNullOrWhiteSpace(name))
-                throw new ArgumentException("Company name is required.");
+                throw new ArgumentException("Tên công ty không được để trống.");
 
             var duplicated = await _db.Companies.AsNoTracking()
                 .AnyAsync(x => x.OwnerUserId == userId && x.Id != id && x.Name == name, ct);
-            if (duplicated) throw new InvalidOperationException("Company name already exists in your companies.");
+            if (duplicated) throw new InvalidOperationException("Tên công ty đã tồn tại trong danh sách của bạn.");
 
             req.ApplyTo(company);
 
@@ -79,7 +79,7 @@ namespace topCv.Application.Services.Commons
                               .Include(x => x.Province)
                               .AsNoTracking()
                               .FirstOrDefaultAsync(x => x.Id == id, ct)
-                          ?? throw new KeyNotFoundException("Company not found.");
+                          ?? throw new KeyNotFoundException("Không tìm thấy công ty.");
 
             return company.ToResponse();
         }
@@ -143,10 +143,10 @@ namespace topCv.Application.Services.Commons
         {
             var company = await _db.Companies
                               .FirstOrDefaultAsync(x => x.Id == id, ct)
-                          ?? throw new KeyNotFoundException("Company not found.");
+                          ?? throw new KeyNotFoundException("Không tìm thấy công ty.");
 
             if (company.OwnerUserId != userId)
-                throw new UnauthorizedAccessException("Not company owner.");
+                throw new UnauthorizedAccessException("Bạn không phải chủ sở hữu công ty.");
 
             _db.Companies.Remove(company);
             await _db.SaveChangesAsync(ct);

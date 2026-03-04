@@ -1,7 +1,9 @@
-﻿using System.Text;
+using System.Text;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.Data.SqlClient;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.FileProviders;
+using Microsoft.Extensions.Options;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
 using topCv.Application.Common;
@@ -34,7 +36,23 @@ builder.Services.AddScoped<ISkillService, SkillService>();
 builder.Services.AddScoped<ICompanyService, CompanyService>();
 builder.Services.AddScoped<IJobService, JobService>();
 builder.Services.AddScoped<IFileStorage, LocalFileStorage>();
+builder.Services.Configure<FileStorageOptions>(builder.Configuration.GetSection("FileStorage"));
+builder.Services.PostConfigure<FileStorageOptions>(opt =>
+{
+    if (string.IsNullOrWhiteSpace(opt.PublicBaseUrl))
+        opt.PublicBaseUrl = "/uploads";
+    else if (!opt.PublicBaseUrl.StartsWith('/'))
+        opt.PublicBaseUrl = "/" + opt.PublicBaseUrl;
+
+    if (string.IsNullOrWhiteSpace(opt.RootPath))
+        opt.RootPath = "wwwroot/uploads";
+
+    if (!Path.IsPathRooted(opt.RootPath))
+        opt.RootPath = Path.GetFullPath(Path.Combine(builder.Environment.ContentRootPath, opt.RootPath));
+});
 builder.Services.AddScoped<IResumeFileService, ResumeFileService>();
+builder.Services.AddScoped<IResumeService, ResumeService>();
+builder.Services.AddScoped<IResumeTemplateCatalogService, ResumeTemplateCatalogService>();
 builder.Services.AddScoped<IJobApplicationService, JobApplicationService>();
 builder.Services.AddScoped<ISavedJobService, SavedJobService>();
 builder.Services.AddScoped<IFollowCompanyService, FollowCompanyService>();
@@ -46,6 +64,7 @@ builder.Services.AddScoped<IWardService, WardService>();
 //
 builder.Services.AddHttpClient<ProvinceWardSeedService>();
 builder.Services.AddScoped<ProvinceWardSeedService>();
+builder.Services.AddScoped<ResumeTemplateCatalogSeedService>();
 
 builder.Services.AddAuthorization(options =>
 {
@@ -158,6 +177,9 @@ using (var scope = app.Services.CreateScope())
         }
 
         // Seed after migrate
+        var resumeTemplateSeed = services.GetRequiredService<ResumeTemplateCatalogSeedService>();
+        await resumeTemplateSeed.SeedAsync();
+
         var seed = services.GetRequiredService<ProvinceWardSeedService>();
         await seed.SeedAsync();
 
@@ -176,6 +198,14 @@ if (app.Environment.IsDevelopment())
     app.UseSwagger();
     app.UseSwaggerUI();
 }
+
+var fileStorageOptions = app.Services.GetRequiredService<IOptions<FileStorageOptions>>().Value;
+Directory.CreateDirectory(fileStorageOptions.RootPath);
+app.UseStaticFiles(new StaticFileOptions
+{
+    FileProvider = new PhysicalFileProvider(fileStorageOptions.RootPath),
+    RequestPath = fileStorageOptions.PublicBaseUrl
+});
 
 app.UseHttpsRedirection();
 

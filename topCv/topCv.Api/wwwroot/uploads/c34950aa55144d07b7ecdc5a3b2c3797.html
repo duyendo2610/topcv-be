@@ -1,0 +1,100 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>My Resume</title>
+  <style>
+    :root {
+      --primary: #1F2937;
+      --accent: #2f80ed;
+      --text: #1f2937;
+      --muted: #5b667a;
+      --paper: #ffffff;
+      --font-body: "Montserrat", "Segoe UI", sans-serif;
+      --font-heading: "Montserrat", "Segoe UI", sans-serif;
+    }
+    * { box-sizing: border-box; }
+    body { margin: 0; padding: 24px; color: var(--text); font-family: var(--font-body); }
+    .page { max-width: 920px; margin: 0 auto; background: var(--paper); border: 1px solid #d8dee9; box-shadow: 0 14px 34px rgba(17, 28, 45, 0.08); }
+    .header { padding: 28px 32px 18px; border-bottom: 3px solid var(--primary); }
+    .title { margin: 0; color: var(--primary); font-family: var(--font-heading); font-size: 30px; line-height: 1.2; letter-spacing: 0.2px; }
+    .meta { margin-top: 8px; color: var(--muted); font-size: 13px; }
+    .content { padding: 20px 32px 28px; }
+    section { margin-bottom: 20px; }
+    section h2 { margin: 0 0 8px; font-family: var(--font-heading); font-size: 17px; color: var(--primary); border-bottom: 1px solid #e2e8f3; padding-bottom: 6px; }
+    p { margin: 0 0 8px; line-height: 1.55; }
+    .muted { color: var(--muted); }
+    .kv { display: grid; grid-template-columns: 160px 1fr; gap: 8px; margin-bottom: 8px; }
+    .k { color: var(--muted); font-size: 13px; }
+    .v { color: var(--text); }
+    .group { margin-bottom: 10px; }
+    .group-title { color: var(--accent); font-weight: 600; margin-bottom: 4px; }
+    ul.list { margin: 0 0 10px 18px; padding: 0; }
+    ul.list li { margin: 4px 0; line-height: 1.45; }
+    .card { border: 1px solid #e2e8f3; border-radius: 8px; padding: 12px; background: #fff; }
+    .split { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+    .split-col > section { margin-bottom: 16px; }
+    .with-sidebar { display: grid; grid-template-columns: 280px 1fr; gap: 18px; }
+    .sidebar { background: rgba(0,0,0,0.02); border: 1px solid #e2e8f3; padding: 12px; }
+    .sidebar .card { border: none; padding: 0; }
+    .section-index { color: var(--muted); font-size: 12px; margin-bottom: 6px; }
+    .template-simple body, .template-simple { background: #f7fafc; }
+    .template-simple .header { background: linear-gradient(90deg, #ffffff 20%, #f4f8ff 100%); }
+    .template-simple.variant-simple_split .content { padding-top: 14px; }
+    .template-simple.variant-simple_focus section { border-left: 4px solid #dbeafe; padding-left: 12px; }
+    .template-impressive body, .template-impressive { background: #eaf2ff; }
+    .template-impressive .header { background: radial-gradient(circle at top right, rgba(47,128,237,0.18), rgba(0,0,0,0) 40%); border-bottom-width: 4px; }
+    .template-impressive .title { font-size: 34px; letter-spacing: 0.4px; }
+    .template-impressive.variant-impressive_gradient .page { background: linear-gradient(180deg, #ffffff, #f7fbff); }
+    .template-impressive.variant-impressive_card section { border: 1px solid #dce6f7; border-radius: 10px; padding: 10px; }
+    .template-impressive.variant-impressive_sidebar .sidebar { background: #f2f7ff; }
+    .template-professional body, .template-professional { background: #f2f4f7; }
+    .template-professional .header { border-bottom: 2px solid #94a3b8; }
+    .template-professional .title { font-size: 29px; }
+    .template-professional section h2 { text-transform: uppercase; font-size: 14px; letter-spacing: 0.5px; }
+    .template-professional.variant-professional_twocol .kv { grid-template-columns: 130px 1fr; }
+    .template-professional.variant-professional_band .header { background: linear-gradient(90deg, rgba(24,49,83,0.09), rgba(24,49,83,0)); }
+    .template-harvard body, .template-harvard { background: #faf7f2; }
+    .template-harvard .page { border-color: #d7cec3; }
+    .template-harvard .header { border-bottom-color: #7c4f2f; }
+    .template-harvard .title { color: #7c4f2f; font-family: "Merriweather", Georgia, serif; font-size: 28px; }
+    .template-harvard section h2 { color: #7c4f2f; border-bottom-color: #dbcbbf; }
+    .template-harvard.variant-harvard_compact .content { padding: 16px 24px 20px; }
+    .template-harvard.variant-harvard_compact .title { font-size: 24px; }
+    .template-harvard.variant-harvard_annotated section { border-left: 3px solid #d9c4b2; padding-left: 10px; }
+    @media (max-width: 860px) { .split, .with-sidebar { grid-template-columns: 1fr; } .content { padding: 16px 20px 20px; } .header { padding: 20px; } }
+    @media print { body { background: #fff; padding: 0; } .page { box-shadow: none; border: none; max-width: none; } @page { size: A4; margin: 12mm; } }
+  </style>
+</head>
+<body><article class="page template-simple variant-simple_clean">
+  <header class="header">
+    <h1 class="title">My Resume</h1>
+    <div class="meta">Template: simple / simple_clean</div>
+  </header>
+  <main class="content">
+<section>
+  <h2>Summary</h2>
+  <div class="kv"><span class="k">Text</span><span class="v">Backend engineer with 5 years of experience.</span></div>
+
+</section>
+<section>
+  <h2>Education</h2>
+  <div class="group">
+  <div class="group-title">Items</div>
+<ul class="list">
+  <li>
+<div class="kv"><span class="k">School</span><span class="v">ABC University</span></div>
+<div class="kv"><span class="k">Degree</span><span class="v">BSc Computer Science</span></div>
+<div class="kv"><span class="k">From</span><span class="v">2016</span></div>
+<div class="kv"><span class="k">To</span><span class="v">2020</span></div>
+
+  </li>
+</ul>
+
+</div>
+
+</section>
+  </main>
+</article></body>
+</html>

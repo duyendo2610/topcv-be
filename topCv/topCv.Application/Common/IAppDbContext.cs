@@ -15,6 +15,9 @@ namespace topCv.Application.Common
         DbSet<Resume> Resumes { get; }
         DbSet<ResumeSection> ResumeSections { get; }
         DbSet<ResumeFile> ResumeFiles { get; }
+        DbSet<ResumeTemplateVariant> ResumeTemplateVariants { get; }
+        DbSet<ResumeThemePreset> ResumeThemePresets { get; }
+        DbSet<ResumeTemplateVariantTheme> ResumeTemplateVariantThemes { get; }
 
         DbSet<Company> Companies { get; }
         DbSet<Job> Jobs { get; }

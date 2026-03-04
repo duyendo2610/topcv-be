@@ -53,7 +53,7 @@ namespace topCv.Api.Controller
 
             if (!Guid.TryParse(userIdRaw, out var userId))
             {
-                return Unauthorized(new { message = "Token missing or invalid user id claim." });
+                return Unauthorized(new { message = "Thiếu token hoặc claim user id không hợp lệ." });
             }
 
             var me = await _db.Users
@@ -73,7 +73,7 @@ namespace topCv.Api.Controller
 
             if (me is null)
             {
-                return NotFound(new { message = "User not found." });
+                return NotFound(new { message = "Không tìm thấy người dùng." });
             }
 
             return Ok(me);
@@ -84,7 +84,7 @@ namespace topCv.Api.Controller
         public async Task<IActionResult> Logout([FromBody] LogoutRequest req, CancellationToken ct)
         {
             await _auth.LogoutAsync(req.RefreshToken, ct);
-            return Ok(new { message = "Logout success" });
+            return Ok(new { message = "Đăng xuất thành công." });
         }
 
         [Authorize]
@@ -97,12 +97,12 @@ namespace topCv.Api.Controller
 
             if (!Guid.TryParse(userIdRaw, out var userId))
             {
-                return Unauthorized(new { message = "Token missing or invalid user id claim." });
+                return Unauthorized(new { message = "Thiếu token hoặc claim user id không hợp lệ." });
             }
 
             await _auth.LogoutAllAsync(userId, ct);
 
-            return Ok(new { message = "Logout all devices success" });
+            return Ok(new { message = "Đăng xuất khỏi tất cả thiết bị thành công." });
         }
     }
 }

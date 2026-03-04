@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using topCv.Infrastructure.Persistence;
 
@@ -11,9 +12,11 @@ using topCv.Infrastructure.Persistence;
 namespace topCv.Infrastructure.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    partial class AppDbContextModelSnapshot : ModelSnapshot
+    [Migration("20260303040020_AddResumeTemplateCatalog")]
+    partial class AddResumeTemplateCatalog
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -510,7 +513,7 @@ namespace topCv.Infrastructure.Migrations
                     b.Property<string>("ThemeJson")
                         .IsRequired()
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("nvarchar(max)")
+                        .HasColumnType("text")
                         .HasDefaultValue("{}");
 
                     b.Property<Guid?>("ThemePresetId")
@@ -583,7 +586,7 @@ namespace topCv.Infrastructure.Migrations
 
                     b.Property<string>("ContentJson")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                        .HasColumnType("text");
 
                     b.Property<DateTime>("CreatedAt")
                         .HasColumnType("datetime2");
@@ -713,7 +716,7 @@ namespace topCv.Infrastructure.Migrations
 
                     b.Property<string>("ThemeJson")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                        .HasColumnType("text");
 
                     b.Property<string>("ThemeKey")
                         .IsRequired()
@@ -1179,5 +1182,3 @@ namespace topCv.Infrastructure.Migrations
         }
     }
 }
-
-

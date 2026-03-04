@@ -20,7 +20,7 @@ namespace topCv.Infrastructure.Configuration.Commons
 
             builder.Property(x => x.SortOrder).HasDefaultValue(0).IsRequired();
 
-            builder.Property(x => x.ContentJson).HasColumnType("text").IsRequired();
+            builder.Property(x => x.ContentJson).HasColumnType("nvarchar(max)").IsRequired();
             builder.Property(x => x.CreatedAt).IsRequired();
         }
     }

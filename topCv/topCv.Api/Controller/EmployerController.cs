@@ -10,6 +10,6 @@ namespace topCv.Api.Controller
     {
         [HttpGet("post")]
         public IActionResult Dashboard()
-            => Ok(new { message = "Welcome Employer" });
+            => Ok(new { message = "Chào mừng nhà tuyển dụng" });
     }
 }

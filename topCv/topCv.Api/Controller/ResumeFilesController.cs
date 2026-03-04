@@ -24,7 +24,7 @@ namespace topCv.Api.Controller
         [Consumes("multipart/form-data")]
         public async Task<IActionResult> Upload([FromForm] UploadResumeFileForm form, CancellationToken ct)
         {
-            if (form.File is null) return BadRequest("File is required.");
+            if (form.File is null) return BadRequest("Vui lòng chọn tệp.");
 
             await using var stream = form.File.OpenReadStream();
 

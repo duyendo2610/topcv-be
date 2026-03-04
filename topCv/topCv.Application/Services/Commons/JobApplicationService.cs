@@ -27,30 +27,30 @@ namespace topCv.Application.Services.Commons
             var job = await _db.Jobs
                           .AsNoTracking()
                           .FirstOrDefaultAsync(x => x.Id == req.JobId, ct)
-                      ?? throw new KeyNotFoundException("Job not found.");
+                      ?? throw new KeyNotFoundException("Không tìm thấy tin tuyển dụng.");
 
             if (job.Status != JobStatus.Published) // 1 = Published
-                throw new InvalidOperationException("Job is not published.");
+                throw new InvalidOperationException("Tin tuyển dụng chưa được đăng.");
 
             if (job.DeadlineAt is DateTime d && d <= DateTime.UtcNow)
-                throw new InvalidOperationException("Job deadline has passed.");
+                throw new InvalidOperationException("Đã quá hạn nộp.");
 
             var existed = await _db.JobApplications
                 .AsNoTracking()
                 .AnyAsync(x => x.JobId == req.JobId && x.CandidateUserId == userId, ct);
 
             if (existed)
-                throw new InvalidOperationException("You already applied for this job.");
+                throw new InvalidOperationException("Bạn đã ứng tuyển tin này.");
 
             if (req.ResumeId is Guid resumeId)
             {
                 var resume = await _db.Resumes
                                  .AsNoTracking()
                                  .FirstOrDefaultAsync(x => x.Id == resumeId, ct)
-                             ?? throw new KeyNotFoundException("Resume not found.");
+                             ?? throw new KeyNotFoundException("Không tìm thấy CV.");
 
                 if (resume.UserId != userId)
-                    throw new UnauthorizedAccessException("Not your resume.");
+                    throw new UnauthorizedAccessException("Bạn không sở hữu CV này.");
 
                 if (req.ResumeFileId is Guid fileId)
                 {
@@ -59,13 +59,13 @@ namespace topCv.Application.Services.Commons
                         .AnyAsync(x => x.Id == fileId && x.ResumeId == resumeId, ct);
 
                     if (!fileOk)
-                        throw new InvalidOperationException("ResumeFileId not found in this resume.");
+                        throw new InvalidOperationException("Không tìm thấy ResumeFileId trong CV này.");
                 }
             }
             else
             {
                 if (req.ResumeFileId is not null)
-                    throw new InvalidOperationException("ResumeId is required when ResumeFileId is provided.");
+                    throw new InvalidOperationException("Cần ResumeId khi có ResumeFileId.");
             }
 
             var entity = req.ToEntity(userId);
@@ -76,8 +76,8 @@ namespace topCv.Application.Services.Commons
             {
                 UserId = job.Company.OwnerUserId, // Employer nhận
                 Type = NotificationType.Other,
-                Title = "New application",
-                Body = $"A candidate applied for '{job.Title}'."
+                Title = "Ứng tuyển mới",
+                Body = $"Có ứng viên đã ứng tuyển cho '{job.Title}'."
             }, ct);
 
             var saved = await LoadForResponse(entity.Id, ct);
@@ -90,16 +90,16 @@ namespace topCv.Application.Services.Commons
             var job = await _db.Jobs
                           .AsNoTracking()
                           .FirstOrDefaultAsync(x => x.Id == jobId, ct)
-                      ?? throw new KeyNotFoundException("Job not found.");
+                      ?? throw new KeyNotFoundException("Không tìm thấy tin tuyển dụng.");
 
             // 2) Employer must own company of this job
             var company = await _db.Companies
                               .AsNoTracking()
                               .FirstOrDefaultAsync(x => x.Id == job.CompanyId, ct)
-                          ?? throw new KeyNotFoundException("Company not found.");
+                          ?? throw new KeyNotFoundException("Không tìm thấy công ty.");
 
             if (company.OwnerUserId != employerUserId)
-                throw new UnauthorizedAccessException("Not company owner.");
+                throw new UnauthorizedAccessException("Bạn không phải chủ sở hữu công ty.");
 
             // 3) Load applications
             var items = await _db.JobApplications
@@ -131,7 +131,7 @@ namespace topCv.Application.Services.Commons
         {
             var entity = await _db.JobApplications
                              .FirstOrDefaultAsync(x => x.Id == applicationId && x.CandidateUserId == userId, ct)
-                         ?? throw new KeyNotFoundException("Application not found.");
+                         ?? throw new KeyNotFoundException("Không tìm thấy hồ sơ ứng tuyển.");
 
             // Validate resume ownership nếu có sửa resume/file
             if (req.ResumeId is Guid resumeId)
@@ -139,10 +139,10 @@ namespace topCv.Application.Services.Commons
                 var resume = await _db.Resumes
                                  .AsNoTracking()
                                  .FirstOrDefaultAsync(x => x.Id == resumeId, ct)
-                             ?? throw new KeyNotFoundException("Resume not found.");
+                             ?? throw new KeyNotFoundException("Không tìm thấy CV.");
 
                 if (resume.UserId != userId)
-                    throw new UnauthorizedAccessException("Not your resume.");
+                    throw new UnauthorizedAccessException("Bạn không sở hữu CV này.");
 
                 if (req.ResumeFileId is Guid fileId)
                 {
@@ -151,13 +151,13 @@ namespace topCv.Application.Services.Commons
                         .AnyAsync(x => x.Id == fileId && x.ResumeId == resumeId, ct);
 
                     if (!fileOk)
-                        throw new InvalidOperationException("ResumeFileId not found in this resume.");
+                        throw new InvalidOperationException("Không tìm thấy ResumeFileId trong CV này.");
                 }
             }
             else
             {
                 if (req.ResumeFileId is not null)
-                    throw new InvalidOperationException("ResumeId is required when ResumeFileId is provided.");
+                    throw new InvalidOperationException("Cần ResumeId khi có ResumeFileId.");
             }
 
             // Apply update + UpdatedAt
@@ -175,16 +175,16 @@ namespace topCv.Application.Services.Commons
             var entity = await _db.JobApplications
                              .Include(x => x.Job)
                              .FirstOrDefaultAsync(x => x.Id == applicationId, ct)
-                         ?? throw new KeyNotFoundException("Application not found.");
+                         ?? throw new KeyNotFoundException("Không tìm thấy hồ sơ ứng tuyển.");
 
             // check owner via job.CompanyId
             var company = await _db.Companies
                               .AsNoTracking()
                               .FirstOrDefaultAsync(x => x.Id == entity.Job.CompanyId, ct)
-                          ?? throw new KeyNotFoundException("Company not found.");
+                          ?? throw new KeyNotFoundException("Không tìm thấy công ty.");
 
             if (company.OwnerUserId != employerUserId)
-                throw new UnauthorizedAccessException("Not company owner.");
+                throw new UnauthorizedAccessException("Bạn không phải chủ sở hữu công ty.");
 
             // Apply status + UpdatedAt
             req.ApplyStatus(entity);
@@ -194,8 +194,8 @@ namespace topCv.Application.Services.Commons
             {
                 UserId = entity.CandidateUserId, // Candidate nhận
                 Type = NotificationType.ApplyStatusChanged,
-                Title = "Application updated",
-                Body = $"Your application for '{entity.Job.Title}' was updated to {entity.Status}."
+                Title = "Cập nhật hồ sơ ứng tuyển",
+                Body = $"Hồ sơ ứng tuyển cho '{entity.Job.Title}' đã được cập nhật trạng thái: {entity.Status}."
             }, ct);
 
             var saved = await LoadForResponse(entity.Id, ct);

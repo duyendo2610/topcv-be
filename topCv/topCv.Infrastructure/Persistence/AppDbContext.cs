@@ -24,6 +24,9 @@ namespace topCv.Infrastructure.Persistence
         public DbSet<Resume> Resumes { get; set; }
         public DbSet<ResumeSection> ResumeSections { get; set; }
         public DbSet<ResumeFile> ResumeFiles { get; set; }
+        public DbSet<ResumeTemplateVariant> ResumeTemplateVariants { get; set; }
+        public DbSet<ResumeThemePreset> ResumeThemePresets { get; set; }
+        public DbSet<ResumeTemplateVariantTheme> ResumeTemplateVariantThemes { get; set; }
         public DbSet<Company> Companies { get; set; }
         public DbSet<Job> Jobs { get; set; }
         public DbSet<Skill> Skills { get; set; }
@@ -61,6 +64,9 @@ namespace topCv.Infrastructure.Persistence
             modelBuilder.ApplyConfiguration(new ResumeConfiguration());
             modelBuilder.ApplyConfiguration(new ResumeFileConfiguration());
             modelBuilder.ApplyConfiguration(new ResumeSectionConfiguration());
+            modelBuilder.ApplyConfiguration(new ResumeTemplateVariantConfiguration());
+            modelBuilder.ApplyConfiguration(new ResumeThemePresetConfiguration());
+            modelBuilder.ApplyConfiguration(new ResumeTemplateVariantThemeConfiguration());
             modelBuilder.ApplyConfiguration(new SavedJobConfiguration());
             modelBuilder.ApplyConfiguration(new SkillConfiguration());
         }

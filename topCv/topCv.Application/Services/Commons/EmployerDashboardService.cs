@@ -33,10 +33,10 @@ namespace topCv.Application.Services.Commons
             var company = await _db.Companies
                               .AsNoTracking()
                               .FirstOrDefaultAsync(x => x.Id == companyId, ct)
-                          ?? throw new KeyNotFoundException("Company not found.");
+                          ?? throw new KeyNotFoundException("Không tìm thấy công ty.");
 
             if (company.OwnerUserId != userId)
-                throw new UnauthorizedAccessException("Not company owner.");
+                throw new UnauthorizedAccessException("Bạn không phải chủ sở hữu công ty.");
 
             var jobs = await _db.Jobs
                 .AsNoTracking()

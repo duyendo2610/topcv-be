@@ -29,14 +29,14 @@ namespace topCv.Application.Services.Commons
         {
             var name = req.Name.Trim();
             if (string.IsNullOrWhiteSpace(name))
-                throw new ArgumentException("Name is required.");
+                throw new ArgumentException("Tên không được để trống.");
 
             var exists = await _db.Skills
                 .AsNoTracking()
                 .AnyAsync(x => x.Name == name, ct);
 
             if (exists)
-                throw new InvalidOperationException("Skill already exists.");
+                throw new InvalidOperationException("Kỹ năng đã tồn tại.");
 
             var entity = new CreateNameRequest { Name = name }.ToSkill();
 
@@ -52,18 +52,18 @@ namespace topCv.Application.Services.Commons
                 .FirstOrDefaultAsync(x => x.Id == id, ct);
 
             if (entity is null)
-                throw new KeyNotFoundException("Skill not found.");
+                throw new KeyNotFoundException("Không tìm thấy kỹ năng.");
 
             var name = req.Name.Trim();
             if (string.IsNullOrWhiteSpace(name))
-                throw new ArgumentException("Name is required.");
+                throw new ArgumentException("Tên không được để trống.");
 
             var exists = await _db.Skills
                 .AsNoTracking()
                 .AnyAsync(x => x.Id != id && x.Name == name, ct);
 
             if (exists)
-                throw new InvalidOperationException("Skill name already exists.");
+                throw new InvalidOperationException("Tên kỹ năng đã tồn tại.");
 
             new UpdateNameRequest { Name = name }.ApplyTo(entity);
             await _db.SaveChangesAsync(ct);
@@ -77,7 +77,7 @@ namespace topCv.Application.Services.Commons
                 .FirstOrDefaultAsync(x => x.Id == id, ct);
 
             if (entity is null)
-                throw new KeyNotFoundException("Skill not found.");
+                throw new KeyNotFoundException("Không tìm thấy kỹ năng.");
 
             _db.Skills.Remove(entity);
             await _db.SaveChangesAsync(ct);
