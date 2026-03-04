@@ -171,6 +171,36 @@ namespace topCv.Application.Services.Commons
                 baseQuery = baseQuery.Where(j => j.JobCategories.Any(c => catSet.Contains(c.CategoryId)));
             }
 
+            // Salary filtering (overlap) with currency normalization to VND
+            if (req.SalaryMin is decimal || req.SalaryMax is decimal)
+            {
+                const decimal usdToVndRate = 26000m;
+
+                if (req.SalaryMin is decimal salaryMin)
+                {
+                    baseQuery = baseQuery.Where(x =>
+                        (x.SalaryMax ?? x.SalaryMin ?? 0) *
+                        (x.Currency == "USD" ? usdToVndRate : 1m) >= salaryMin);
+                }
+
+                if (req.SalaryMax is decimal salaryMax)
+                {
+                    baseQuery = baseQuery.Where(x =>
+                        (x.SalaryMin ?? x.SalaryMax ?? 0) *
+                        (x.Currency == "USD" ? usdToVndRate : 1m) <= salaryMax);
+                }
+            }
+
+            if (req.ExpMin is int expMin)
+            {
+                baseQuery = baseQuery.Where(x => (x.ExpMin ?? 0) >= expMin);
+            }
+
+            if (req.ExpMax is int expMax)
+            {
+                baseQuery = baseQuery.Where(x => ((x.ExpMax ?? x.ExpMin) ?? 0) <= expMax);
+            }
+
             var totalItems = await baseQuery.LongCountAsync(ct);
 
             var items = await baseQuery

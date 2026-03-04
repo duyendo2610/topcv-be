@@ -72,9 +72,14 @@ namespace topCv.Application.Services.Commons
             _db.JobApplications.Add(entity);
             await _db.SaveChangesAsync(ct);
 
+            var company = await _db.Companies
+                              .AsNoTracking()
+                              .FirstOrDefaultAsync(x => x.Id == job.CompanyId, ct)
+                          ?? throw new KeyNotFoundException("Không tìm thấy công ty.");
+
             await _noti.CreateAsync(new CreateNotificationRequest
             {
-                UserId = job.Company.OwnerUserId, // Employer nhận
+                UserId = company.OwnerUserId, // Employer nhận
                 Type = NotificationType.Other,
                 Title = "Ứng tuyển mới",
                 Body = $"Có ứng viên đã ứng tuyển cho '{job.Title}'."
