@@ -23,6 +23,7 @@ namespace topCv.Domain.Entities.Commons
         public int? ExpMax { get; set; }
         public DateTime? DeadlineAt { get; set; }
         public JobStatus Status { get; set; }
+        public DateTime? SubmittedAtUtc { get; set; }
         public DateTime CreatedAt { get; set; }
         public DateTime? UpdatedAt { get; set; }
         public Company Company { get; set; } = default!;

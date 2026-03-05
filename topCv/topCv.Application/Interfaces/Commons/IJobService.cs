@@ -11,5 +11,8 @@ namespace topCv.Application.Interfaces.Commons
         Task<PagedResult<JobResponse>> SearchAsync(JobQueryRequest req, CancellationToken ct);
         Task PublishAsync(Guid id, Guid userId, CancellationToken ct);
         Task CloseAsync(Guid id, Guid userId, CancellationToken ct);
+        Task<List<AdminJobApprovalResponse>> GetPendingApprovalsAsync(CancellationToken ct);
+        Task ApproveAsync(Guid id, Guid adminUserId, CancellationToken ct);
+        Task RejectAsync(Guid id, Guid adminUserId, CancellationToken ct);
     }
 }

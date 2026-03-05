@@ -37,6 +37,7 @@ namespace topCv.Infrastructure.Persistence
         public DbSet<SavedJob> SavedJobs { get; set; }
         public DbSet<FollowCompany> FollowCompanies { get; set; }
         public DbSet<Notification> Notifications { get; set; }
+        public DbSet<EmployerRequest> EmployerRequests { get; set; }
 
         public override Task<int> SaveChangesAsync(CancellationToken ct = default)
             => base.SaveChangesAsync(ct);
@@ -60,6 +61,7 @@ namespace topCv.Infrastructure.Persistence
             modelBuilder.ApplyConfiguration(new JobConfiguration());
             modelBuilder.ApplyConfiguration(new JobSkillConfiguration());
             modelBuilder.ApplyConfiguration(new NotificationConfiguration());
+            modelBuilder.ApplyConfiguration(new EmployerRequestConfiguration());
             modelBuilder.ApplyConfiguration(new ProvinceConfiguration());
             modelBuilder.ApplyConfiguration(new ResumeConfiguration());
             modelBuilder.ApplyConfiguration(new ResumeFileConfiguration());

@@ -33,6 +33,7 @@ namespace topCv.Infrastructure.Configuration.Commons
             builder.Property(x => x.Address).HasMaxLength(255);
 
             builder.Property(x => x.Status).IsRequired();
+            builder.Property(x => x.SubmittedAtUtc);
 
             builder.Property(x => x.CreatedAt).IsRequired();
             builder.Property(x => x.UpdatedAt);

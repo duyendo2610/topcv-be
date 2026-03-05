@@ -33,6 +33,7 @@ namespace topCv.Application.Common
         DbSet<FollowCompany> FollowCompanies { get; }
 
         DbSet<Notification> Notifications { get; }
+        DbSet<EmployerRequest> EmployerRequests { get; }
 
         Task<int> SaveChangesAsync(CancellationToken ct = default);
     }

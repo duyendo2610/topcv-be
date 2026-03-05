@@ -233,7 +233,12 @@ namespace topCv.Application.Services.Commons
             if (company.OwnerUserId != userId)
                 throw new UnauthorizedAccessException("Bạn không phải chủ sở hữu công ty.");
 
-            job.Status = JobStatus.Published; // Published
+            if (job.Status == JobStatus.Published)
+                return;
+
+            job.Status = JobStatus.Draft;
+            job.SubmittedAtUtc ??= DateTime.UtcNow;
+            job.UpdatedAt = DateTime.UtcNow;
             await _db.SaveChangesAsync(ct);
         }
 
@@ -249,6 +254,55 @@ namespace topCv.Application.Services.Commons
                 throw new UnauthorizedAccessException("Bạn không phải chủ sở hữu công ty.");
 
             job.Status = JobStatus.Closed; // Closed
+            job.UpdatedAt = DateTime.UtcNow;
+            await _db.SaveChangesAsync(ct);
+        }
+
+        public async Task<List<AdminJobApprovalResponse>> GetPendingApprovalsAsync(CancellationToken ct)
+        {
+            return await _db.Jobs
+                .AsNoTracking()
+                .Include(x => x.Company)
+                .Where(x => x.Status == JobStatus.Draft && x.SubmittedAtUtc != null)
+                .OrderByDescending(x => x.SubmittedAtUtc)
+                .Select(x => new AdminJobApprovalResponse
+                {
+                    Id = x.Id,
+                    Title = x.Title,
+                    CompanyId = x.CompanyId,
+                    CompanyName = x.Company.Name,
+                    Status = x.Status,
+                    CreatedAtUtc = x.CreatedAt,
+                    SubmittedAtUtc = x.SubmittedAtUtc
+                })
+                .ToListAsync(ct);
+        }
+
+        public async Task ApproveAsync(Guid id, Guid adminUserId, CancellationToken ct)
+        {
+            var job = await _db.Jobs
+                          .FirstOrDefaultAsync(x => x.Id == id, ct)
+                      ?? throw new KeyNotFoundException("Không tìm thấy tin tuyển dụng.");
+
+            if (job.Status != JobStatus.Draft || job.SubmittedAtUtc == null)
+                throw new InvalidOperationException("Tin tuyển dụng không ở trạng thái chờ duyệt.");
+
+            job.Status = JobStatus.Published;
+            job.UpdatedAt = DateTime.UtcNow;
+            await _db.SaveChangesAsync(ct);
+        }
+
+        public async Task RejectAsync(Guid id, Guid adminUserId, CancellationToken ct)
+        {
+            var job = await _db.Jobs
+                          .FirstOrDefaultAsync(x => x.Id == id, ct)
+                      ?? throw new KeyNotFoundException("Không tìm thấy tin tuyển dụng.");
+
+            if (job.Status != JobStatus.Draft || job.SubmittedAtUtc == null)
+                throw new InvalidOperationException("Tin tuyển dụng không ở trạng thái chờ duyệt.");
+
+            job.Status = JobStatus.Closed;
+            job.UpdatedAt = DateTime.UtcNow;
             await _db.SaveChangesAsync(ct);
         }
 

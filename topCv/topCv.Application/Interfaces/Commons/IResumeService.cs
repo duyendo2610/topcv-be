@@ -10,6 +10,7 @@ namespace topCv.Application.Interfaces.Commons
         Task<ResumeDetailResponse> UpdateAsync(Guid userId, Guid resumeId, UpdateResumeRequest req, CancellationToken ct);
         Task DeleteAsync(Guid userId, Guid resumeId, CancellationToken ct);
         Task<ResumePreviewResponse> PreviewAsync(Guid userId, Guid resumeId, CancellationToken ct);
+        Task<ResumePreviewResponse> PreviewForEmployerAsync(Guid applicationId, Guid employerUserId, CancellationToken ct);
         Task<ResumeFileResponse> ExportHtmlAsync(Guid userId, Guid resumeId, CancellationToken ct);
     }
 }

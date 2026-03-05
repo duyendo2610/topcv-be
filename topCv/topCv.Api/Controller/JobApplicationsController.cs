@@ -11,10 +11,12 @@ namespace topCv.Api.Controller
     public class ApplicationsController : ControllerBase
     {
         private readonly IJobApplicationService _service;
+        private readonly IResumeService _resumeService;
 
-        public ApplicationsController(IJobApplicationService service)
+        public ApplicationsController(IJobApplicationService service, IResumeService resumeService)
         {
             _service = service;
+            _resumeService = resumeService;
         }
 
         private Guid UserId =>
@@ -44,6 +46,12 @@ namespace topCv.Api.Controller
         public async Task<IActionResult> UpdateStatus(Guid id, [FromBody] UpdateJobApplicationStatusRequest req,
             CancellationToken ct)
             => Ok(await _service.UpdateStatusAsync(id, req, UserId, ct));
+
+        // Employer: preview resume by application
+        [Authorize]
+        [HttpGet("{id:guid}/preview")]
+        public async Task<IActionResult> Preview(Guid id, CancellationToken ct)
+            => Ok(await _resumeService.PreviewForEmployerAsync(id, UserId, ct));
 
         // Candidate: update my application content (optional endpoint)
         [Authorize]

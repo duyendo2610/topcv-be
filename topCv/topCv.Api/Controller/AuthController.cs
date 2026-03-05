@@ -67,7 +67,11 @@ namespace topCv.Api.Controller
                     x.Phone,
                     x.Role,
                     x.IsActive,
-                    x.CreatedAtUtc
+                    x.CreatedAtUtc,
+                    CompanyId = _db.Companies
+                        .Where(c => c.OwnerUserId == x.Id)
+                        .Select(c => (Guid?)c.Id)
+                        .FirstOrDefault()
                 })
                 .FirstOrDefaultAsync(ct);
 

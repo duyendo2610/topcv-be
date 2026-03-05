@@ -221,6 +221,47 @@ namespace topCv.Application.Services.Commons
             };
         }
 
+        public async Task<ResumePreviewResponse> PreviewForEmployerAsync(Guid applicationId, Guid employerUserId,
+            CancellationToken ct)
+        {
+            var application = await _db.JobApplications
+                                 .AsNoTracking()
+                                 .Include(x => x.Job)
+                                 .ThenInclude(x => x.Company)
+                                 .FirstOrDefaultAsync(x => x.Id == applicationId, ct)
+                             ?? throw new KeyNotFoundException("Không tìm thấy hồ sơ ứng tuyển.");
+
+            if (application.Job?.Company == null)
+                throw new KeyNotFoundException("Không tìm thấy công ty.");
+
+            if (application.Job.Company.OwnerUserId != employerUserId)
+                throw new UnauthorizedAccessException("Bạn không phải chủ sở hữu công ty.");
+
+            if (application.ResumeId == null)
+                throw new InvalidOperationException("Ứng viên chưa có CV để xem trước.");
+
+            var resume = await _db.Resumes
+                .AsNoTracking()
+                .Include(x => x.Sections)
+                .Include(x => x.TemplateVariant)
+                .Include(x => x.ThemePreset)
+                .FirstOrDefaultAsync(x => x.Id == application.ResumeId.Value, ct)
+                ?? throw new KeyNotFoundException("Không tìm thấy CV.");
+
+            var html = ResumeHtmlRenderer.Render(resume, resume.Sections.ToList(), resume.TemplateVariant, resume.ThemePreset);
+
+            return new ResumePreviewResponse
+            {
+                ResumeId = resume.Id,
+                ResumeName = resume.Name,
+                TemplateKey = resume.TemplateKey,
+                TemplateVariantKey = resume.TemplateVariant?.VariantKey,
+                ThemePresetKey = resume.ThemePreset?.ThemeKey,
+                Html = html,
+                GeneratedAtUtc = DateTime.UtcNow
+            };
+        }
+
         public async Task<ResumeFileResponse> ExportHtmlAsync(Guid userId, Guid resumeId, CancellationToken ct)
         {
             var preview = await PreviewAsync(userId, resumeId, ct);

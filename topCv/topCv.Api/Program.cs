@@ -57,6 +57,7 @@ builder.Services.AddScoped<IJobApplicationService, JobApplicationService>();
 builder.Services.AddScoped<ISavedJobService, SavedJobService>();
 builder.Services.AddScoped<IFollowCompanyService, FollowCompanyService>();
 builder.Services.AddScoped<IEmployerDashboardService, EmployerDashboardService>();
+builder.Services.AddScoped<IEmployerRequestService, EmployerRequestService>();
 builder.Services.AddScoped<INotificationService, NotificationService>();
 builder.Services.AddScoped<IJobMatchService, JobMatchService>();
 builder.Services.AddScoped<IWardService, WardService>();
