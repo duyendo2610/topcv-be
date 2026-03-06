@@ -11,10 +11,12 @@ namespace topCv.Application.Services.Commons
     public sealed class EmployerRequestService : IEmployerRequestService
     {
         private readonly IAppDbContext _db;
+        private readonly INotificationService _noti;
 
-        public EmployerRequestService(IAppDbContext db)
+        public EmployerRequestService(IAppDbContext db, INotificationService noti)
         {
             _db = db;
+            _noti = noti;
         }
 
         public async Task<EmployerRequestResponse> CreateAsync(CreateEmployerRequestRequest req, Guid userId,
@@ -56,6 +58,17 @@ namespace topCv.Application.Services.Commons
 
             _db.EmployerRequests.Add(entity);
             await _db.SaveChangesAsync(ct);
+
+            await _noti.CreateForRolesAsync(
+                new[] { AppRoles.Admin },
+                new CreateNotificationTemplateRequest
+                {
+                    Type = NotificationType.Other,
+                    Title = "Yeu cau cap quyen Employer moi",
+                    Body = $"{user.FullName} ({user.Email}) vua gui yeu cau cho cong ty '{company.Name}'.",
+                },
+                ct,
+                excludeUserId: userId);
 
             return new EmployerRequestResponse
             {
@@ -138,6 +151,14 @@ namespace topCv.Application.Services.Commons
             request.ResolvedByUserId = adminUserId;
 
             await _db.SaveChangesAsync(ct);
+
+            await _noti.CreateAsync(new CreateNotificationRequest
+            {
+                UserId = request.UserId,
+                Type = NotificationType.Other,
+                Title = "Yeu cau Employer da duoc chap thuan",
+                Body = "Tai khoan cua ban da duoc cap quyen Employer.",
+            }, ct);
         }
 
         public async Task RejectAsync(Guid requestId, Guid adminUserId, CancellationToken ct)
@@ -154,6 +175,14 @@ namespace topCv.Application.Services.Commons
             request.ResolvedByUserId = adminUserId;
 
             await _db.SaveChangesAsync(ct);
+
+            await _noti.CreateAsync(new CreateNotificationRequest
+            {
+                UserId = request.UserId,
+                Type = NotificationType.Other,
+                Title = "Yeu cau Employer bi tu choi",
+                Body = "Yeu cau cap quyen Employer cua ban da bi tu choi.",
+            }, ct);
         }
     }
 }

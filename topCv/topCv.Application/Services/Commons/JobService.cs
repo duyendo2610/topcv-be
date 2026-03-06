@@ -3,6 +3,7 @@ using topCv.Application.Common;
 using topCv.Application.DTOs.Commons;
 using topCv.Application.Interfaces.Commons;
 using topCv.Application.Mappings;
+using topCv.Domain.Common;
 using topCv.Domain.Entities.Commons;
 using topCv.Domain.Enums;
 
@@ -11,10 +12,12 @@ namespace topCv.Application.Services.Commons
     public sealed class JobService : IJobService
     {
         private readonly IAppDbContext _db;
+        private readonly INotificationService _noti;
 
-        public JobService(IAppDbContext db)
+        public JobService(IAppDbContext db, INotificationService noti)
         {
             _db = db;
+            _noti = noti;
         }
 
         public async Task<JobResponse> CreateAsync(CreateJobRequest req, Guid userId, CancellationToken ct)
@@ -201,14 +204,44 @@ namespace topCv.Application.Services.Commons
                 baseQuery = baseQuery.Where(x => ((x.ExpMax ?? x.ExpMin) ?? 0) <= expMax);
             }
 
+            var sortBy = (req.SortBy ?? "createdAt").Trim().ToLowerInvariant();
+            var sortDirection = (req.SortDirection ?? "desc").Trim().ToLowerInvariant();
+            var isAsc = sortDirection == "asc";
+
             var totalItems = await baseQuery.LongCountAsync(ct);
 
-            var items = await baseQuery
+            var queryWithIncludes = baseQuery
                 .Include(x => x.Company)
                 .Include(x => x.Province)
                 .Include(x => x.JobSkills)
-                .Include(x => x.JobCategories)
-                .OrderByDescending(x => x.CreatedAt) // nếu không có CreatedAt thì đổi sang Id
+                .Include(x => x.JobCategories);
+
+            IOrderedQueryable<Job> orderedQuery = sortBy switch
+            {
+                "salary" => isAsc
+                    ? queryWithIncludes
+                        .OrderBy(x => x.SalaryMin ?? x.SalaryMax ?? 0)
+                        .ThenByDescending(x => x.CreatedAt)
+                    : queryWithIncludes
+                        .OrderByDescending(x => x.SalaryMax ?? x.SalaryMin ?? 0)
+                        .ThenByDescending(x => x.CreatedAt),
+                "exp" => isAsc
+                    ? queryWithIncludes
+                        .OrderBy(x => x.ExpMin ?? x.ExpMax ?? 0)
+                        .ThenByDescending(x => x.CreatedAt)
+                    : queryWithIncludes
+                        .OrderByDescending(x => x.ExpMax ?? x.ExpMin ?? 0)
+                        .ThenByDescending(x => x.CreatedAt),
+                "createdat" => isAsc
+                    ? queryWithIncludes
+                        .OrderBy(x => x.CreatedAt)
+                    : queryWithIncludes
+                        .OrderByDescending(x => x.CreatedAt),
+                _ => queryWithIncludes
+                    .OrderByDescending(x => x.CreatedAt)
+            };
+
+            var items = await orderedQuery
                 .Skip((page - 1) * pageSize)
                 .Take(pageSize)
                 .ToListAsync(ct);
@@ -240,6 +273,17 @@ namespace topCv.Application.Services.Commons
             job.SubmittedAtUtc ??= DateTime.UtcNow;
             job.UpdatedAt = DateTime.UtcNow;
             await _db.SaveChangesAsync(ct);
+
+            await _noti.CreateForRolesAsync(
+                new[] { AppRoles.Admin },
+                new CreateNotificationTemplateRequest
+                {
+                    Type = NotificationType.Other,
+                    Title = "Tin tuyen dung cho duyet",
+                    Body = $"Tin '{job.Title}' da duoc gui len he thong cho duyet.",
+                },
+                ct,
+                excludeUserId: userId);
         }
 
         public async Task CloseAsync(Guid id, Guid userId, CancellationToken ct)
@@ -287,9 +331,22 @@ namespace topCv.Application.Services.Commons
             if (job.Status != JobStatus.Draft || job.SubmittedAtUtc == null)
                 throw new InvalidOperationException("Tin tuyển dụng không ở trạng thái chờ duyệt.");
 
+            var company = await _db.Companies
+                .AsNoTracking()
+                .FirstOrDefaultAsync(x => x.Id == job.CompanyId, ct)
+                ?? throw new KeyNotFoundException("Không tìm thấy công ty.");
+
             job.Status = JobStatus.Published;
             job.UpdatedAt = DateTime.UtcNow;
             await _db.SaveChangesAsync(ct);
+
+            await _noti.CreateAsync(new CreateNotificationRequest
+            {
+                UserId = company.OwnerUserId,
+                Type = NotificationType.Other,
+                Title = "Tin da duoc duyet",
+                Body = $"Tin '{job.Title}' da duoc duyet va dang hien thi.",
+            }, ct);
         }
 
         public async Task RejectAsync(Guid id, Guid adminUserId, CancellationToken ct)
@@ -301,9 +358,22 @@ namespace topCv.Application.Services.Commons
             if (job.Status != JobStatus.Draft || job.SubmittedAtUtc == null)
                 throw new InvalidOperationException("Tin tuyển dụng không ở trạng thái chờ duyệt.");
 
+            var company = await _db.Companies
+                .AsNoTracking()
+                .FirstOrDefaultAsync(x => x.Id == job.CompanyId, ct)
+                ?? throw new KeyNotFoundException("Không tìm thấy công ty.");
+
             job.Status = JobStatus.Closed;
             job.UpdatedAt = DateTime.UtcNow;
             await _db.SaveChangesAsync(ct);
+
+            await _noti.CreateAsync(new CreateNotificationRequest
+            {
+                UserId = company.OwnerUserId,
+                Type = NotificationType.Other,
+                Title = "Tin bi tu choi",
+                Body = $"Tin '{job.Title}' khong duoc duyet va da dong.",
+            }, ct);
         }
 
         private async Task ValidateSkillsAndCategories(List<int> skillIds, List<int> categoryIds, CancellationToken ct)

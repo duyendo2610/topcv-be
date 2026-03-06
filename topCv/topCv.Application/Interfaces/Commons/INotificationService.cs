@@ -8,5 +8,10 @@ namespace topCv.Application.Interfaces.Commons
         Task MarkAsReadAsync(Guid notificationId, Guid userId, CancellationToken ct);
         Task MarkAllAsReadAsync(Guid userId, CancellationToken ct);
         Task<NotificationResponse> CreateAsync(CreateNotificationRequest req, CancellationToken ct);
+        Task<int> CreateForRolesAsync(
+            IEnumerable<string> roles,
+            CreateNotificationTemplateRequest req,
+            CancellationToken ct,
+            Guid? excludeUserId = null);
     }
 }

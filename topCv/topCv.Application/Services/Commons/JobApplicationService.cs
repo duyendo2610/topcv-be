@@ -85,6 +85,14 @@ namespace topCv.Application.Services.Commons
                 Body = $"Có ứng viên đã ứng tuyển cho '{job.Title}'."
             }, ct);
 
+            await _noti.CreateAsync(new CreateNotificationRequest
+            {
+                UserId = userId, // Candidate xác nhận đã apply
+                Type = NotificationType.Other,
+                Title = "Đã nộp hồ sơ ứng tuyển",
+                Body = $"Bạn đã ứng tuyển vào vị trí '{job.Title}'."
+            }, ct);
+
             var saved = await LoadForResponse(entity.Id, ct);
             return saved.ToResponse();
         }

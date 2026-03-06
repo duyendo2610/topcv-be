@@ -28,6 +28,48 @@ namespace topCv.Application.Services.Commons
             return entity.ToResponse();
         }
 
+        public async Task<int> CreateForRolesAsync(
+            IEnumerable<string> roles,
+            CreateNotificationTemplateRequest req,
+            CancellationToken ct,
+            Guid? excludeUserId = null)
+        {
+            var normalizedRoles = roles
+                .Where(x => !string.IsNullOrWhiteSpace(x))
+                .Select(x => x.Trim())
+                .Distinct(StringComparer.OrdinalIgnoreCase)
+                .ToList();
+
+            if (normalizedRoles.Count == 0 || string.IsNullOrWhiteSpace(req.Title))
+                return 0;
+
+            var usersQuery = _db.Users
+                .AsNoTracking()
+                .Where(x => normalizedRoles.Contains(x.Role));
+
+            if (excludeUserId is Guid userId)
+                usersQuery = usersQuery.Where(x => x.Id != userId);
+
+            var userIds = await usersQuery
+                .Select(x => x.Id)
+                .ToListAsync(ct);
+
+            if (userIds.Count == 0)
+                return 0;
+
+            var entities = userIds.Select(userId => new CreateNotificationRequest
+            {
+                UserId = userId,
+                Type = req.Type,
+                Title = req.Title,
+                Body = req.Body,
+            }.ToEntity()).ToList();
+
+            _db.Notifications.AddRange(entities);
+            await _db.SaveChangesAsync(ct);
+            return entities.Count;
+        }
+
         public async Task<List<NotificationResponse>> GetMyAsync(Guid userId, CancellationToken ct)
         {
             var items = await _db.Notifications
